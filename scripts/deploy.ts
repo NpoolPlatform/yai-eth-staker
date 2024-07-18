@@ -1,5 +1,5 @@
 import { deployMe } from './common/deploy'
 
 deployMe().then(function() {
-    process.exit(0)
+  process.exit(0)
 })
