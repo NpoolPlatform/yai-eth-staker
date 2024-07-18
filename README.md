@@ -7,6 +7,7 @@
 yarn add -s slither
 yarn install
 yarn compile
+yarn slither
 ```
 
 ## TODO
