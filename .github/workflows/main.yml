@@ -9,7 +9,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'yarn'
-      - run: yarn add -s slither
       - run: yarn install --frozen-lockfile
+      - run: yarn add -s slither
       - run: yarn compile
       - run: yarn slither
