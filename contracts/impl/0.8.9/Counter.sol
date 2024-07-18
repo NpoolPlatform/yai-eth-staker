@@ -4,7 +4,7 @@ pragma solidity =0.8.9;
 contract Counter {
   uint256 public count;
 
-  function get()  public view returns (uint256) {
+  function get() public view returns (uint256) {
     return count;
   }
 

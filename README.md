@@ -14,3 +14,4 @@ yarn slither
 - [ ] Deployment scripts
 - [ ] Unit tests framework
 - [ ] Contract debugger
+- [ ] Convert etherscan-verify.js to typescript
