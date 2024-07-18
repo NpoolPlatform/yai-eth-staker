@@ -12,3 +12,4 @@ yarn compile
 ## TODO
 - [ ] Deployment scripts
 - [ ] Unit tests framework
+- [ ] Contract debugger
