@@ -8,3 +8,7 @@ yarn add -s slither
 yarn install
 yarn compile
 ```
+
+## TODO
+- [ ] Deployment scripts
+- [ ] Unit tests framework
