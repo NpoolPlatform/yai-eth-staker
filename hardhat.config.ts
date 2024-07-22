@@ -1,7 +1,8 @@
-import { HardhatUserConfig } from 'hardhat/config'
+import { HardhatUserConfig, vars  } from 'hardhat/config'
 import '@nomicfoundation/hardhat-toolbox'
 import '@nomiclabs/hardhat-truffle5'
 import { config as dotEnvConfig } from 'dotenv'
+require("@typechain/hardhat");
 
 dotEnvConfig()
 
@@ -11,15 +12,37 @@ const providerUrl = process.env.PROVIDER_URL || 'http://localhost:8545'
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: '0.8.9',
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 15000,
+    compilers: [
+      {
+        version: '0.8.9',
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 15000,
+          },
+        }
       },
-    }
+        {
+        version: '0.8.24',
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 15000,
+          },
+        }
+      }
+    ]
+
   },
   networks: {
+    holesky: {
+      url: "https://rpc.holesky.ethpandaops.io",
+      accounts: [ vars.get("HOLESKY_PRIVATE_KEY")]
+    },
+    sepolia: {
+      url: `https://eth-sepolia.g.alchemy.com/v2/${vars.get('ALCHEMY_API_KEY')}`,
+      accounts: [vars.get("SEPOLIA_PRIVATE_KEY")]
+    },
     hardhat: {},
     localhost: {},
     testnet: {
@@ -38,6 +61,10 @@ const config: HardhatUserConfig = {
     tests: './test',
     cache: './cache',
     artifacts: './artifacts'
+  },
+  typechain: {
+    outDir: "typechain-types",
+    target: "ethers-v6"
   },
   mocha: {
     timeout: 0
