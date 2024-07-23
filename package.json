@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "compile": "yarn hardhat compile",
-    "deploy": "yarn hardhat deploy",
+    "deploy": "yarn hardhat deploy --network hardhat",
     "deploy:mainnet": "yarn hardhat deploy --network mainnet",
     "deploy:holesky": "yarn hardhat deploy --network holesky",
     "verify": "yarn hardhat --network mainnet etherscan-verify",

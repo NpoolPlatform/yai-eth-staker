@@ -5,7 +5,6 @@ import 'hardhat-deploy'
 import 'hardhat-deploy-ethers'
 import { config as dotEnvConfig } from 'dotenv'
 import { DeploymentNetwork } from './utils/constant'
-import chainIds from './utils/chainIds.json'
 import rpcUrls from './utils/rpcUrls.json'
 dotEnvConfig()
 
@@ -51,7 +50,6 @@ const config: HardhatUserConfig = {
       live: false
     },
     [DeploymentNetwork.Mainnet]: {
-      chainId: chainIds[DeploymentNetwork.Mainnet],
       url: rpcUrls[DeploymentNetwork.Mainnet],
       saveDeployments: true,
       live: true,
@@ -64,7 +62,6 @@ const config: HardhatUserConfig = {
       }
     },
     [DeploymentNetwork.Holesky]: {
-      chainId: chainIds[DeploymentNetwork.Holesky],
       url: rpcUrls[DeploymentNetwork.Holesky],
       saveDeployments: true,
       live: false,
