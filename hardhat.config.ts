@@ -1,11 +1,13 @@
-import { HardhatUserConfig, vars  } from 'hardhat/config'
+import { HardhatUserConfig  } from 'hardhat/config'
 import '@nomicfoundation/hardhat-toolbox'
 import '@nomiclabs/hardhat-truffle5'
 import 'hardhat-deploy'
 import 'hardhat-deploy-ethers'
+import { config as dotEnvConfig } from 'dotenv'
 import { DeploymentNetwork } from './utils/constant'
 import chainIds from './utils/chainIds.json'
 import rpcUrls from './utils/rpcUrls.json'
+dotEnvConfig()
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -53,6 +55,7 @@ const config: HardhatUserConfig = {
       url: rpcUrls[DeploymentNetwork.Mainnet],
       saveDeployments: true,
       live: true,
+      accounts: [process.env.MAINNET_PRIVATE_KEY!].filter(Boolean)
       //deploy: [`deploy/scripts/${DeploymentNetwork.Mainnet}`], // can specify different deployment paths for different networks, default is deploy directory
       // verify: { // verifying the source code of smart contract on Etherscan if needed
       //     etherscan: {
@@ -65,7 +68,7 @@ const config: HardhatUserConfig = {
       url: rpcUrls[DeploymentNetwork.Holesky],
       saveDeployments: true,
       live: false,
-      accounts: [ vars.get("HOLESKY_PRIVATE_KEY")]
+      accounts: [process.env.HOLESKY_PRIVATE_KEY!].filter(Boolean)
     },
   },
   paths: {
