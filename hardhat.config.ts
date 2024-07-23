@@ -70,7 +70,8 @@ const config: HardhatUserConfig = {
     sources: './contracts',
     tests: './test',
     cache: './cache',
-    artifacts: './artifacts'
+    artifacts: './artifacts',
+    deploy: './deploy'
   },
   typechain: {
     outDir: 'typechain-types',
