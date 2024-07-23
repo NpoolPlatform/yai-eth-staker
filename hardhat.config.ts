@@ -34,8 +34,8 @@ const config: HardhatUserConfig = {
   namedAccounts: {
     deployer: {
       default: 0,
-      "mainnet": "0x8FC831e238F7AF962214a866BE36fC1429774d60",
-      "holesky": "0x8FC831e238F7AF962214a866BE36fC1429774d60"
+      mainnet: '0x8FC831e238F7AF962214a866BE36fC1429774d60',
+      holesky: '0x8FC831e238F7AF962214a866BE36fC1429774d60'
     },
   },
   defaultNetwork: 'hardhat',
@@ -47,25 +47,23 @@ const config: HardhatUserConfig = {
       },
       allowUnlimitedContractSize: true,
       saveDeployments: true,
-      live: false
     },
     [DeploymentNetwork.Mainnet]: {
       url: `${rpcUrls[DeploymentNetwork.Mainnet]}/${process.env.ALCHEMY_API_KEY}`,
-      saveDeployments: true,
-      live: true,
       accounts: [process.env.MAINNET_PRIVATE_KEY!].filter(Boolean),
+      saveDeployments: true,
       //deploy: [`deploy/scripts/${DeploymentNetwork.Mainnet}`], // can specify different deployment paths for different networks, default is deploy directory
       verify: { // verifying the source code of smart contract on Etherscan if needed
           etherscan: {
               apiKey: process.env.ETHERSCAN_API_KEY
           }
-      }
+      },
+      // tags: ['contract1', 'contract2'] // only deploy contract contains these tag 
     },
     [DeploymentNetwork.Holesky]: {
       url: rpcUrls[DeploymentNetwork.Holesky],
-      saveDeployments: true,
-      live: false,
       accounts: [process.env.HOLESKY_PRIVATE_KEY!].filter(Boolean),
+      saveDeployments: true,
     },
   },
   paths: {
@@ -75,8 +73,8 @@ const config: HardhatUserConfig = {
     artifacts: './artifacts'
   },
   typechain: {
-    outDir: "typechain-types",
-    target: "ethers-v6"
+    outDir: 'typechain-types',
+    target: 'ethers-v6'
   },
   mocha: {
     timeout: 0
