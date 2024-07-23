@@ -1,43 +1,82 @@
-import { HardhatUserConfig } from 'hardhat/config'
+import { HardhatUserConfig, vars  } from 'hardhat/config'
 import '@nomicfoundation/hardhat-toolbox'
 import '@nomiclabs/hardhat-truffle5'
-import { config as dotEnvConfig } from 'dotenv'
-
-dotEnvConfig()
-
-const mnemonicPhrase = process.env.MNEMONIC || 'test test test test test test test test test test test junk'
-const mnemonicPassword = process.env.MNEMONIC_PASSWORD
-const providerUrl = process.env.PROVIDER_URL || 'http://localhost:8545'
+import 'hardhat-deploy'
+import 'hardhat-deploy-ethers'
+import { DeploymentNetwork } from './utils/constant'
+import chainIds from './utils/chainIds.json'
+import rpcUrls from './utils/rpcUrls.json'
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: '0.8.9',
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 15000,
+    compilers: [
+      {
+        version: '0.8.9',
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 15000,
+          },
+        }
       },
-    }
+      {
+        version: '0.7.0',
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 15000,
+          },
+        }
+      },
+    ]
   },
+  namedAccounts: {
+    deployer: {
+      default: 0,
+      "mainnet": "0x8FC831e238F7AF962214a866BE36fC1429774d60",
+      "holesky": "0x8FC831e238F7AF962214a866BE36fC1429774d60"
+    },
+  },
+  defaultNetwork: 'hardhat',
   networks: {
-    hardhat: {},
-    localhost: {},
-    testnet: {
-      url: `${providerUrl}`,
+    [DeploymentNetwork.Hardhat]: {
       accounts: {
-        mnemonic: mnemonicPhrase,
-        path: 'm/44\'/60\'/0\'/0',
-        initialIndex: 0,
-        count: 1,
-        passphrase: mnemonicPassword,
-      }
-    }
+        count: 20,
+        accountsBalance: '10000000000000000000000000000000000000000000000'
+      },
+      allowUnlimitedContractSize: true,
+      saveDeployments: true,
+      live: false
+    },
+    [DeploymentNetwork.Mainnet]: {
+      chainId: chainIds[DeploymentNetwork.Mainnet],
+      url: rpcUrls[DeploymentNetwork.Mainnet],
+      saveDeployments: true,
+      live: true,
+      //deploy: [`deploy/scripts/${DeploymentNetwork.Mainnet}`], // can specify different deployment paths for different networks, default is deploy directory
+      // verify: { // verifying the source code of smart contract on Etherscan if needed
+      //     etherscan: {
+      //         apiKey: VERIFY_API_KEY
+      //     }
+      // }
+    },
+    [DeploymentNetwork.Holesky]: {
+      chainId: chainIds[DeploymentNetwork.Holesky],
+      url: rpcUrls[DeploymentNetwork.Holesky],
+      saveDeployments: true,
+      live: false,
+      accounts: [ vars.get("HOLESKY_PRIVATE_KEY")]
+    },
   },
   paths: {
     sources: './contracts',
     tests: './test',
     cache: './cache',
     artifacts: './artifacts'
+  },
+  typechain: {
+    outDir: "typechain-types",
+    target: "ethers-v6"
   },
   mocha: {
     timeout: 0

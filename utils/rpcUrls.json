@@ -1,0 +1,5 @@
+{
+    "mainnet": "https://mainnet.infura.io/v3/",
+    "sepolia": "https://rpc.sepolia.ethpandaops.io",
+    "holesky": "https://ethereum-holesky.publicnode.com"
+}
