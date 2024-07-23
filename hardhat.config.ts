@@ -55,20 +55,20 @@ const config: HardhatUserConfig = {
       url: rpcUrls[DeploymentNetwork.Mainnet],
       saveDeployments: true,
       live: true,
-      accounts: [process.env.MAINNET_PRIVATE_KEY!].filter(Boolean)
+      accounts: [process.env.MAINNET_PRIVATE_KEY!].filter(Boolean),
       //deploy: [`deploy/scripts/${DeploymentNetwork.Mainnet}`], // can specify different deployment paths for different networks, default is deploy directory
-      // verify: { // verifying the source code of smart contract on Etherscan if needed
-      //     etherscan: {
-      //         apiKey: VERIFY_API_KEY
-      //     }
-      // }
+      verify: { // verifying the source code of smart contract on Etherscan if needed
+          etherscan: {
+              apiKey: process.env.ETHERSCAN_API_KEY
+          }
+      }
     },
     [DeploymentNetwork.Holesky]: {
       chainId: chainIds[DeploymentNetwork.Holesky],
       url: rpcUrls[DeploymentNetwork.Holesky],
       saveDeployments: true,
       live: false,
-      accounts: [process.env.HOLESKY_PRIVATE_KEY!].filter(Boolean)
+      accounts: [process.env.HOLESKY_PRIVATE_KEY!].filter(Boolean),
     },
   },
   paths: {
