@@ -45,11 +45,13 @@ const config: HardhatUserConfig = {
         count: 10,
         accountsBalance: '1000000000000000000000'
       },
+      live: false,
       allowUnlimitedContractSize: true,
       saveDeployments: true,
     },
     [DeploymentNetwork.Mainnet]: {
       url: `${rpcUrls[DeploymentNetwork.Mainnet]}/${process.env.ALCHEMY_API_KEY}`,
+      live: true,
       accounts: [process.env.MAINNET_PRIVATE_KEY!].filter(Boolean),
       saveDeployments: true,
       //deploy: [`deploy/scripts/${DeploymentNetwork.Mainnet}`], // can specify different deployment paths for different networks, default is deploy directory
@@ -64,6 +66,7 @@ const config: HardhatUserConfig = {
       url: rpcUrls[DeploymentNetwork.Holesky],
       accounts: [process.env.HOLESKY_PRIVATE_KEY!].filter(Boolean),
       saveDeployments: true,
+      live: false,
     },
   },
   paths: {
