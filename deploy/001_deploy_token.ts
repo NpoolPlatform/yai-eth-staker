@@ -17,5 +17,5 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) { /
 };
 export default func;
 func.tags = ['Token']; // This sets up a tag so you can execute the script on its own (and its dependencies).
-// func.dependencies = ['OtherContract'] // this ensure OtherContract is execute first 
+// func.dependencies = ['OtherContract'] // this ensure OtherContract is execute first and visit it by deployments.get('OtherContract')
 // func.runAtTheEnd = true  // this ensure current script to be executed after all other scripts are executed.
