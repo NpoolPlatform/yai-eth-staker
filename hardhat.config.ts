@@ -42,8 +42,8 @@ const config: HardhatUserConfig = {
   networks: {
     [DeploymentNetwork.Hardhat]: {
       accounts: {
-        count: 20,
-        accountsBalance: '10000000000000000000000000000000000000000000000'
+        count: 10,
+        accountsBalance: '1000000000000000000000'
       },
       allowUnlimitedContractSize: true,
       saveDeployments: true,
