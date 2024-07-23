@@ -12,7 +12,7 @@
     "deploy:holesky": "yarn hardhat deploy --network holesky",
     "watch": "yarn hardhat deploy --watch --network hardhat",
     "export:holesky": "yarn hardhat deploy --network holesky --export ./holesky.json",
-    "verify": "yarn hardhat --network mainnet etherscan-verify",
+    "verify": "yarn hardhat --network mainnet etherscan-verify --sleep",
     "test": "yarn hardhat test",
     "slither": "slither --filter-paths node_modules,old --exclude conformance-to-solidity-naming-conventions ."
   },

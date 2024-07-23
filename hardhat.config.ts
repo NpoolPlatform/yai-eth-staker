@@ -50,7 +50,7 @@ const config: HardhatUserConfig = {
       live: false
     },
     [DeploymentNetwork.Mainnet]: {
-      url: rpcUrls[DeploymentNetwork.Mainnet],
+      url: `${rpcUrls[DeploymentNetwork.Mainnet]}/${process.env.ALCHEMY_API_KEY}`,
       saveDeployments: true,
       live: true,
       accounts: [process.env.MAINNET_PRIVATE_KEY!].filter(Boolean),
