@@ -10,6 +10,7 @@
     "deploy": "yarn hardhat deploy --network hardhat",
     "deploy:mainnet": "yarn hardhat deploy --network mainnet",
     "deploy:holesky": "yarn hardhat deploy --network holesky",
+    "watch": "yarn hardhat deploy --watch --network hardhat",
     "verify": "yarn hardhat --network mainnet etherscan-verify",
     "test": "yarn hardhat test",
     "slither": "slither --filter-paths node_modules,old --exclude conformance-to-solidity-naming-conventions ."
