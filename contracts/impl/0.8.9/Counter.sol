@@ -3,13 +3,13 @@ pragma solidity =0.8.9;
 
 contract Counter {
     uint256 public count;
-    address private ADMIN_ADDRESS;
+    address private adminContractAddress;
 
     error PermissionDenied();
     error InvalidAddress();
 
     modifier onlyAdminContract() {
-        if (msg.sender != ADMIN_ADDRESS) {
+        if (msg.sender != adminContractAddress) {
             revert PermissionDenied();
         }
         _;
@@ -21,7 +21,7 @@ contract Counter {
         if (adminAddress == address(0)) {
             revert InvalidAddress();
         }
-        ADMIN_ADDRESS = adminAddress;
+        adminContractAddress = adminAddress;
     }
 
     // Only admin contract can call
