@@ -2,6 +2,7 @@
   "extends": "solhint:recommended",
   "plugins": ["prettier"],
   "rules": {
+    "quotes": ["error", "single"],
     "code-complexity": ["error", 8],
     "compiler-version": ["error", ">=0.8.4"],
     "func-visibility": [
@@ -17,7 +18,8 @@
     "prettier/prettier": [
       "error",
       {
-        "endOfLine": "auto"
+        "endOfLine": "auto",
+        "singleQuote": true
       }
     ]
   }
