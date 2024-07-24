@@ -3,7 +3,6 @@ pragma solidity =0.8.9;
 
 contract Counter {
   uint256 public count;
-  address private owner;
   address private ADMIN_ADDRESS;
 
   modifier onlyAdminContract() {
