@@ -14,7 +14,10 @@
     "export:holesky": "yarn hardhat deploy --network holesky --export ./holesky.json",
     "verify": "yarn hardhat --network mainnet etherscan-verify --sleep",
     "test": "yarn hardhat test",
-    "slither": "slither --filter-paths node_modules,old --exclude conformance-to-solidity-naming-conventions ."
+    "slither": "slither --filter-paths node_modules,old --exclude conformance-to-solidity-naming-conventions .",
+    "lint:sol": "solhint \"contracts/**/*.sol\" --ignore-path .solhintignore",
+    "prettier:check": "prettier --check \"**/*.{js,json,md,ts,yml}\"",
+    "prettier:write": "prettier --write \"**/*.{js,json,md,ts,yml}\""
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "2.0.0",
@@ -43,7 +46,11 @@
     "hardhat-gas-reporter": "1.0.8",
     "mocha": "^10.1.0",
     "pako": "^1.0.6",
+    "prettier": "^3.3.3",
+    "prettier-plugin-solidity": "^1.3.1",
     "query-string": "^7.0.1",
+    "solhint-community": "^4.0.0",
+    "solhint-plugin-prettier": "^0.1.0",
     "solidity-coverage": "0.8.1",
     "ts-node": "^10.9.2",
     "typechain": "^8.3.0",
