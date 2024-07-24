@@ -19,15 +19,6 @@ const config: HardhatUserConfig = {
           },
         }
       },
-      {
-        version: '0.7.0',
-        settings: {
-          optimizer: {
-            enabled: true,
-            runs: 15000,
-          },
-        }
-      },
     ]
   },
   namedAccounts: {
