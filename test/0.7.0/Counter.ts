@@ -3,7 +3,7 @@ import { expect } from '../chai-setup'
 import { ethers, deployments } from 'hardhat'
 
 describe('Counter', () => {
-  it('Get admin address', async () => {
+  it('get admin address', async () => {
     await deployments.fixture(['Counter']) // deploy counter contract first (it also deploy admin contract first)
 
     const admin = (await ethers.getContract('Admin')) as Contract // interact with deployed admin contract
@@ -11,7 +11,7 @@ describe('Counter', () => {
 
     expect(counter.ADMIN_ADDRESS).to.equal(admin.address)
   })
-  it('Add count', async () => {
+  it('add count', async () => {
     await deployments.fixture(['Counter'])
 
     const admin = (await ethers.getContract('Admin')) as Contract
@@ -23,7 +23,7 @@ describe('Counter', () => {
     await admin.add() // increase count
     expect(await counter.get()).to.equal(2)
   })
-  it('Call directly', async () => {
+  it('call directly', async () => {
     await deployments.fixture(['Counter'])
 
     const counter = (await ethers.getContract('Counter')) as Contract

@@ -15,10 +15,15 @@
     "verify": "yarn hardhat --network mainnet etherscan-verify --sleep",
     "test": "yarn hardhat test",
     "slither": "slither --filter-paths node_modules,old --exclude conformance-to-solidity-naming-conventions .",
+    "lint": "yarn lint:sol && yarn prettier:check",
     "lint:sol": "solhint \"contracts/**/*.sol\" --ignore-path .solhintignore",
     "prettier:check": "prettier --check \"**/*.{js,json,md,ts,yml}\"",
     "prettier:write": "prettier --write \"**/*.{js,json,md,ts,yml}\""
   },
+  "pre-commit": [
+    "lint",
+    "test"
+  ],
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "2.0.0",
     "@nomicfoundation/hardhat-ethers": "3.0.0",

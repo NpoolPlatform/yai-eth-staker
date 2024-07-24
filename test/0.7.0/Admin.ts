@@ -3,7 +3,7 @@ import { expect } from '../chai-setup'
 import { ethers, deployments, getUnnamedAccounts } from 'hardhat'
 
 describe('Admin', () => {
-  it('Set counter address', async () => {
+  it('set counter address', async () => {
     await deployments.fixture(['Admin']) // deploy admin contract first
     const users = await getUnnamedAccounts()
 
