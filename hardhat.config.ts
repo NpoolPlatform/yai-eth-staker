@@ -3,9 +3,8 @@ import '@nomicfoundation/hardhat-toolbox'
 import '@nomiclabs/hardhat-truffle5'
 import 'hardhat-deploy'
 import 'hardhat-deploy-ethers'
+import "@nomicfoundation/hardhat-verify"
 import { config as dotEnvConfig } from 'dotenv'
-import { DeploymentNetwork } from './utils/constant'
-import rpcUrls from './utils/rpcUrls.json'
 dotEnvConfig()
 
 const config: HardhatUserConfig = {
@@ -40,7 +39,7 @@ const config: HardhatUserConfig = {
   },
   defaultNetwork: 'hardhat',
   networks: {
-    [DeploymentNetwork.Hardhat]: {
+    hardhat: {
       accounts: {
         count: 10,
         accountsBalance: '1000000000000000000000'
@@ -49,8 +48,8 @@ const config: HardhatUserConfig = {
       allowUnlimitedContractSize: true,
       saveDeployments: true,
     },
-    [DeploymentNetwork.Mainnet]: {
-      url: `${rpcUrls[DeploymentNetwork.Mainnet]}/${process.env.ALCHEMY_API_KEY}`,
+    mainnet: {
+      url: `https://eth-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`,
       live: true,
       accounts: [process.env.MAINNET_PRIVATE_KEY!].filter(Boolean),
       saveDeployments: true,
@@ -62,8 +61,8 @@ const config: HardhatUserConfig = {
       },
       // tags: ['contract1', 'contract2'] // only deploy contract contains these tag 
     },
-    [DeploymentNetwork.Holesky]: {
-      url: rpcUrls[DeploymentNetwork.Holesky],
+    holesky: {
+      url: 'https://ethereum-holesky.publicnode.com',
       accounts: [process.env.HOLESKY_PRIVATE_KEY!].filter(Boolean),
       saveDeployments: true,
       live: false,

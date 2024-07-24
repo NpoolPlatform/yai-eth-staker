@@ -1,5 +1,0 @@
-{
-    "mainnet": "https://eth-mainnet.g.alchemy.com/v2",
-    "sepolia": "https://rpc.sepolia.ethpandaops.io",
-    "holesky": "https://ethereum-holesky.publicnode.com"
-}
