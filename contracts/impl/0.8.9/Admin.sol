@@ -11,8 +11,7 @@ contract Admin {
         if (counterContractAddress == address(0)) {
             revert InvalidAddress();
         }
-        ICounter Counter = ICounter(counterContractAddress);
-        Counter.inc();
+        ICounter(counterContractAddress).inc();
     }
 
     function setCounterAddress(address counterAddress) public {

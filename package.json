@@ -21,8 +21,7 @@
     "prettier:write": "prettier --write \"**/*.{js,json,md,ts,yml}\""
   },
   "pre-commit": [
-    "lint:sol",
-    "prettier:check",
+    "lint",
     "test"
   ],
   "devDependencies": {
