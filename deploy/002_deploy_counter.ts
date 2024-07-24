@@ -6,7 +6,7 @@ import { Contract } from 'ethers'
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts } = hre
 
-  // get admin deployment
+  // Get admin deployment
   const Admin = await deployments.get('Admin')
 
   const { deployer } = await getNamedAccounts()
@@ -14,13 +14,13 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const deployResult = await deploy('Counter', {
     from: deployer,
-    args: [Admin.address], // visit admin contract address
+    args: [Admin.address], // Visit admin contract address
     log: true,
   })
 
   if (deployResult.newlyDeployed) {
     const Admin = (await ethers.getContract('Admin')) as Contract
-    // set counter address for admin
+    // Set counter address for admin
     await Admin.setCounterAddress(deployResult.address)
   }
 }
