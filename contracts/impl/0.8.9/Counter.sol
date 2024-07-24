@@ -10,10 +10,6 @@ contract Counter {
     require(msg.sender == ADMIN_ADDRESS, "Permission Denied");
     _;
   }
-  modifier onlyOwner() {
-    require(msg.sender == owner, "Not Owner");
-    _;
-  }
 
   // Events
   event CounterIncreased(
