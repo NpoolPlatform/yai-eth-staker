@@ -24,6 +24,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     await Admin.setCounterAddress(deployResult.address)
   }
 }
+
 export default func
 func.tags = ['Counter']
 func.dependencies = ['Admin']
