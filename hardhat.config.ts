@@ -46,7 +46,7 @@ const config: HardhatUserConfig = {
       saveDeployments: true,
       //deploy: [`deploy/scripts/${DeploymentNetwork.Mainnet}`], // can specify different deployment paths for different networks, default is deploy directory
       verify: {
-        // verifying the source code of smart contract on Etherscan if needed
+        // verifying the source code of smart contract on etherscan if needed
         etherscan: {
           apiKey: process.env.ETHERSCAN_API_KEY,
         },
