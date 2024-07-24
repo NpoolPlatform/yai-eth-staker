@@ -1,25 +1,27 @@
 // SPDX-License-Identifier: SEE LICENSE IN LICENSE
 pragma solidity =0.8.9;
-
-interface ICounter {
-    function inc() external;
-}
+import { ICounter } from '../../interface/0.8.9/ICounter.sol';
 
 contract Admin {
-    address private COUNTER_CONTRACT_ADDRESS;
+    address private counterContractAddress;
+
+    error InvalidAddress();
 
     function add() public {
-        require(COUNTER_CONTRACT_ADDRESS != address(0), 'invalid address');
-        ICounter Counter = ICounter(COUNTER_CONTRACT_ADDRESS);
-        Counter.inc();
+        if (counterContractAddress == address(0)) {
+            revert InvalidAddress();
+        }
+        ICounter(counterContractAddress).inc();
     }
 
     function setCounterAddress(address counterAddress) public {
-        require(counterAddress != address(0), 'invalid address');
-        COUNTER_CONTRACT_ADDRESS = counterAddress;
+        if (counterAddress == address(0)) {
+            revert InvalidAddress();
+        }
+        counterContractAddress = counterAddress;
     }
 
     function getCounterAddress() public view returns (address) {
-        return COUNTER_CONTRACT_ADDRESS;
+        return counterContractAddress;
     }
 }
