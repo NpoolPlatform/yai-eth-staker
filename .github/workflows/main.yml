@@ -12,4 +12,6 @@ jobs:
       - run: yarn install --frozen-lockfile
       - run: yarn add -s slither || true
       - run: yarn compile
+      - run: yarn lint
+      - run: yarn test
       - run: yarn slither
