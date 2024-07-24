@@ -23,4 +23,11 @@ describe('Counter', () => {
         await Admin.add() // increase count
         expect(await Counter.get()).to.equal(2)
     })
+    it ('Call directly', async () => {
+        await deployments.fixture(['Counter']) // deploy Counter contract first
+
+        const Counter = await ethers.getContract('Counter') as Contract // interact with deployed Counter contract
+
+        await expect(Counter.inc()).to.be.revertedWith("Permission Denied"); // call directly with counter will report err
+    })
 })
