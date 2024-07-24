@@ -3,8 +3,8 @@ import { DeployFunction } from 'hardhat-deploy/types'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts } = hre
-  const { deployer } = await getNamedAccounts()
 
+  const { deployer } = await getNamedAccounts()
   const { deploy } = deployments
 
   await deploy('Admin', {

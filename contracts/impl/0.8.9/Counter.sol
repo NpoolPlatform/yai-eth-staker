@@ -5,19 +5,26 @@ contract Counter {
     uint256 public count;
     address private ADMIN_ADDRESS;
 
+    error PermissionDenied();
+    error InvalidAddress();
+
     modifier onlyAdminContract() {
-        require(msg.sender == ADMIN_ADDRESS, 'Permission Denied');
+        if (msg.sender != ADMIN_ADDRESS) {
+            revert PermissionDenied();
+        }
         _;
     }
 
-    // Events
     event CounterIncreased(address indexed account, uint256 count);
 
     constructor(address adminAddress) {
-        require(address(adminAddress) != address(0), 'invalid address');
+        if (adminAddress == address(0)) {
+            revert InvalidAddress();
+        }
         ADMIN_ADDRESS = adminAddress;
     }
 
+    // Only admin contract can call
     function inc() public onlyAdminContract {
         count += 1;
         emit CounterIncreased(msg.sender, count);

@@ -63,12 +63,12 @@ const config: HardhatUserConfig = {
   paths: {
     sources: './contracts',
     tests: './test',
-    cache: './cache',
-    artifacts: './artifacts',
+    cache: './output/cache',
+    artifacts: './output/artifacts',
     deploy: './deploy',
   },
   typechain: {
-    outDir: 'typechain-types',
+    outDir: 'output/typechain-types',
     target: 'ethers-v6',
   },
   mocha: {
