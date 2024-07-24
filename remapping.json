@@ -1,5 +1,5 @@
 {
-    "remappings": [
-      "@openzeppelin/contracts/=node_modules/@openzeppelin/contracts/"
-    ]
-  }
+  "remappings": [
+    "@openzeppelin/contracts/=node_modules/@openzeppelin/contracts/"
+  ]
+}
