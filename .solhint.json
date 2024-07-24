@@ -18,7 +18,7 @@
     "prettier/prettier": [
       "error",
       {
-        "endOfLine": "auto",
+        "endOfLine": "crlf",
         "singleQuote": true
       }
     ]
