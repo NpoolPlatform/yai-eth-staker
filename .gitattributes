@@ -1,2 +1,2 @@
 *.sol linguist-language=Solidity
-* text eol=crlf
+* text eol=lf
