@@ -16,6 +16,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     from: deployer,
     args: [admin.address], // visit admin contract address
     log: true,
+    proxy: true
   })
 
   if (deployResult.newlyDeployed) {

@@ -26,7 +26,7 @@ contract Counter {
 
     // Only admin contract can call
     function inc() public onlyAdminContract {
-        count += 1;
+        count += 2;
         emit CounterIncreased(msg.sender, count);
     }
 

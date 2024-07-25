@@ -10,6 +10,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   await deploy('Admin', {
     from: deployer,
     log: true,
+    proxy: true
   })
 }
 
