@@ -1,5 +1,6 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
+import { ContractName, proxyContractAddress } from '../utils'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts } = hre
@@ -7,12 +8,14 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await getNamedAccounts()
   const { deploy } = deployments
 
-  await deploy('Admin', {
+  await deploy(ContractName.ADMIN_CONTRACT_NAME, {
     from: deployer,
     log: true,
-    proxy: true
+    proxy: {
+      proxyContract: proxyContractAddress(hre.network, ContractName.ADMIN_CONTRACT_NAME)
+    }
   })
 }
 
 export default func
-func.tags = ['Admin']
+func.tags = [ContractName.ADMIN_CONTRACT_NAME]
