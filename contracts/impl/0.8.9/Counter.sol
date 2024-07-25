@@ -30,6 +30,11 @@ contract Counter {
         emit CounterIncreased(msg.sender, count);
     }
 
+    function sub() public onlyAdminContract {
+        count -= 1;
+        emit CounterIncreased(msg.sender, count);
+    }
+
     function get() public view returns (uint256) {
         return count;
     }
