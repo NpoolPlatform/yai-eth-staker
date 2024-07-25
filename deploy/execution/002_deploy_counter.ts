@@ -18,12 +18,17 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     args: [admin.address], // visit admin contract address
     log: true,
     proxy: {
-      proxyContract: proxyContractAddress(hre.network, ContractName.COUNTER_CONTRACT_NAME)
-    }
+      proxyContract: proxyContractAddress(
+        hre.network,
+        ContractName.COUNTER_CONTRACT_NAME,
+      ),
+    },
   })
 
   if (deployResult.newlyDeployed) {
-    const admin = (await ethers.getContract(ContractName.ADMIN_CONTRACT_NAME)) as Contract
+    const admin = (await ethers.getContract(
+      ContractName.ADMIN_CONTRACT_NAME,
+    )) as Contract
     // set counter address for admin
     await admin.setCounterAddress(deployResult.address)
   }

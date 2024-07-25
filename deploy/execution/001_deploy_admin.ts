@@ -12,8 +12,11 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     from: deployer,
     log: true,
     proxy: {
-      proxyContract: proxyContractAddress(hre.network, ContractName.ADMIN_CONTRACT_NAME)
-    }
+      proxyContract: proxyContractAddress(
+        hre.network,
+        ContractName.ADMIN_CONTRACT_NAME,
+      ),
+    },
   })
 }
 
