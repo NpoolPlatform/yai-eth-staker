@@ -18,7 +18,8 @@
     "lint": "yarn lint:sol && yarn prettier:check",
     "lint:sol": "solhint \"contracts/**/*.sol\" --ignore-path .solhintignore",
     "prettier:check": "prettier --check \"**/*.{js,json,md,ts,yml}\"",
-    "prettier:write": "prettier --write \"**/*.{js,json,md,ts,yml}\""
+    "prettier:write": "prettier --write \"**/*.{js,json,md,ts,yml}\"",
+    "precommit:fix": "cp ./hooks/pre-commit ./git/hooks"
   },
   "pre-commit": [
     "lint",
