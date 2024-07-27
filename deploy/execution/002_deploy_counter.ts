@@ -13,15 +13,20 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await getNamedAccounts()
   const { deploy } = deployments
 
+  const proxyAddress = proxyContractAddress(hre.network, ContractName.COUNTER_CONTRACT_NAME)
+  if (proxyAddress) {
+    const proxyContract = await deployments.get(ContractName.COUNTER_CONTRACT_NAME)
+    if (proxyAddress !== proxyContract.address) {
+      return Promise.reject('Admin proxy address mismatch')
+    }
+  }
+
   const deployResult = await deploy(ContractName.COUNTER_CONTRACT_NAME, {
     from: deployer,
     args: [admin.address], // visit admin contract address
     log: true,
     proxy: {
-      proxyContract: proxyContractAddress(
-        hre.network,
-        ContractName.COUNTER_CONTRACT_NAME,
-      ),
+      proxyContract: 'OpenZeppelinTransparentProxy',
     },
   })
 

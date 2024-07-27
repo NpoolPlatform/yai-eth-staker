@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: SEE LICENSE IN LICENSE
-pragma solidity =0.8.9;
+pragma solidity =0.8.20;
 
 contract Counter {
     uint256 public count;
@@ -26,12 +26,12 @@ contract Counter {
 
     // Only admin contract can call
     function inc() public onlyAdminContract {
-        count += 3;
+        count += 4;
         emit CounterIncreased(msg.sender, count);
     }
 
     function sub() public onlyAdminContract {
-        count -= 1;
+        count -= 2;
         emit CounterIncreased(msg.sender, count);
     }
 
