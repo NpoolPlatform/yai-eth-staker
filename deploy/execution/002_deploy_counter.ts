@@ -12,9 +12,14 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await getNamedAccounts()
   const { deploy } = deployments
 
-  const proxyAddress = proxyContractAddress(hre.network, ContractName.COUNTER_CONTRACT_NAME)
+  const proxyAddress = proxyContractAddress(
+    hre.network,
+    ContractName.COUNTER_CONTRACT_NAME,
+  )
   if (proxyAddress) {
-    const proxyContract = await deployments.get(ContractName.COUNTER_CONTRACT_NAME)
+    const proxyContract = await deployments.get(
+      ContractName.COUNTER_CONTRACT_NAME,
+    )
     if (proxyAddress !== proxyContract.address) {
       return Promise.reject('Counter proxy address mismatch')
     }

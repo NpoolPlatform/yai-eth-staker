@@ -7,9 +7,14 @@ import { ContractName, proxyContractAddress } from '../utils'
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments } = hre
 
-  const proxyAddress = proxyContractAddress(hre.network, ContractName.PROXY_ADMIN_CONTRACT_NAME)
+  const proxyAddress = proxyContractAddress(
+    hre.network,
+    ContractName.PROXY_ADMIN_CONTRACT_NAME,
+  )
   if (proxyAddress) {
-    const proxyContract = await deployments.get(ContractName.PROXY_ADMIN_CONTRACT_NAME)
+    const proxyContract = await deployments.get(
+      ContractName.PROXY_ADMIN_CONTRACT_NAME,
+    )
     if (proxyAddress !== proxyContract.address) {
       return Promise.reject('Proxy admin address mismatch')
     }
