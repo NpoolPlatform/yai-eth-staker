@@ -1,6 +1,6 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
-import { ContractName, proxyContractAddress } from '../utils'
+import { ContractName, proxyContractAddress, proxyContractType } from '../utils'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts } = hre
@@ -20,7 +20,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     from: deployer,
     log: true,
     proxy: {
-      proxyContract: 'OpenZeppelinTransparentProxy',
+      proxyContract: proxyContractType,
+      viaAdminContract: ContractName.PROXY_ADMIN_CONTRACT_NAME,
     },
   })
 }

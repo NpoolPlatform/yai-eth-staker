@@ -1,8 +1,7 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
-import { ethers } from 'hardhat'
 import { Contract } from 'ethers'
-import { ContractName, proxyContractAddress } from '../utils'
+import { ContractName, proxyContractAddress, proxyContractType } from '../utils'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts } = hre
@@ -17,7 +16,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   if (proxyAddress) {
     const proxyContract = await deployments.get(ContractName.COUNTER_CONTRACT_NAME)
     if (proxyAddress !== proxyContract.address) {
-      return Promise.reject('Admin proxy address mismatch')
+      return Promise.reject('Counter proxy address mismatch')
     }
   }
 
@@ -26,12 +25,13 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     args: [admin.address], // visit admin contract address
     log: true,
     proxy: {
-      proxyContract: 'OpenZeppelinTransparentProxy',
+      proxyContract: proxyContractType,
+      viaAdminContract: ContractName.PROXY_ADMIN_CONTRACT_NAME,
     },
   })
 
   if (deployResult.newlyDeployed) {
-    const admin = (await ethers.getContract(
+    const admin = (await hre.ethers.getContract(
       ContractName.ADMIN_CONTRACT_NAME,
     )) as Contract
     // set counter address for admin
