@@ -1,7 +1,8 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
 import { Contract } from 'ethers'
-import { ContractName, proxyContractAddress, proxyContractType } from '../utils'
+import { proxyContractAddress, proxyContractType } from '../utils'
+import { ContractName } from '../../def/const/contract_name'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts } = hre

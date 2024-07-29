@@ -1,6 +1,7 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
-import { ContractName, proxyContractAddress } from '../utils'
+import { proxyContractAddress } from '../utils'
+import { ContractName } from '../../def/const/contract_name'
 
 // We don't actually deploy ProxyAdmin here. We just check if it's the original one we deployed.
 

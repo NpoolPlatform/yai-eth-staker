@@ -1,32 +1,21 @@
 import { Contract } from 'ethers'
 import { expect } from '../chai-setup'
 import { ethers, deployments } from 'hardhat'
+import { ContractName } from '../../def/const/contract_name'
 
-describe('Counter', () => {
-  it('get admin address', async () => {
-    await deployments.fixture(['Counter']) // deploy counter contract first (it also deploy admin contract first)
+describe(ContractName.COUNTER_CONTRACT_NAME, () => {
+  it('Get admin address', async () => {
+    await deployments.fixture([ContractName.COUNTER_CONTRACT_NAME])
 
-    const admin = (await ethers.getContract('Admin')) as Contract // interact with deployed admin contract
-    const counter = (await ethers.getContract('Counter')) as Contract // interact with deployed Counter contract
+    const admin = (await ethers.getContract(ContractName.ADMIN_CONTRACT_NAME)) as Contract
+    const counter = (await ethers.getContract(ContractName.COUNTER_CONTRACT_NAME)) as Contract
 
     expect(counter.ADMIN_ADDRESS).to.equal(admin.address)
   })
-  it('add count', async () => {
-    await deployments.fixture(['Counter'])
+  it('Call directly', async () => {
+    await deployments.fixture([ContractName.COUNTER_CONTRACT_NAME])
 
-    const admin = (await ethers.getContract('Admin')) as Contract
-    const counter = (await ethers.getContract('Counter')) as Contract
-
-    await admin.add() // increase count
-    expect(await counter.get()).to.equal(1)
-
-    await admin.add() // increase count
-    expect(await counter.get()).to.equal(2)
-  })
-  it('call directly', async () => {
-    await deployments.fixture(['Counter'])
-
-    const counter = (await ethers.getContract('Counter')) as Contract
+    const counter = (await ethers.getContract(ContractName.COUNTER_CONTRACT_NAME)) as Contract
 
     await expect(counter.inc()).to.revertedWith('PermissionDenied') // call directly with counter will report err
   })

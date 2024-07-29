@@ -1,5 +1,5 @@
 import { Network } from 'hardhat/types'
-import { ContractName } from './contract_name'
+import { ContractName } from '../../def/const/contract_name'
 
 export const proxyContractAddress = (
   network: Network,

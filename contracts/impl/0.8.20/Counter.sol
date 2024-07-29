@@ -3,35 +3,31 @@ pragma solidity =0.8.20;
 
 contract Counter {
     uint256 public count;
-    address private adminContractAddress;
+    address private s_adminContractAddress;
 
     error PermissionDenied();
     error InvalidAddress();
 
     modifier onlyAdminContract() {
-        if (msg.sender != adminContractAddress) {
-            revert PermissionDenied();
-        }
+        if (msg.sender != adminContractAddress) revert PermissionDenied();
         _;
     }
 
     event CounterIncreased(address indexed account, uint256 count);
 
     constructor(address adminAddress) {
-        if (adminAddress == address(0)) {
-            revert InvalidAddress();
-        }
+        if (adminAddress == address(0)) revert InvalidAddress();
         adminContractAddress = adminAddress;
     }
 
     // Only admin contract can call
     function inc() public onlyAdminContract {
-        count += 4;
+        count += 1;
         emit CounterIncreased(msg.sender, count);
     }
 
     function sub() public onlyAdminContract {
-        count -= 2;
+        count -= 1;
         emit CounterIncreased(msg.sender, count);
     }
 

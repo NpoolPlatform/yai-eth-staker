@@ -1,10 +1,10 @@
 {
   "extends": "solhint:recommended",
-  "plugins": ["prettier"],
+  "plugins": ["prettier", "chainlink-solidity"],
   "rules": {
     "quotes": ["error", "single"],
     "code-complexity": ["error", 8],
-    "compiler-version": ["error", ">=0.8.4"],
+    "compiler-version": ["error", "^0.8.4"],
     "func-visibility": [
       "error",
       {
@@ -20,6 +20,28 @@
       {
         "endOfLine": "lf",
         "singleQuote": true
+      }
+    ],
+    "reason-string": [
+      "warn",
+      {
+        "maxLength": 64
+      }
+    ],
+    "constructor-syntax": "error",
+    "chainlink-solidity/prefix-internal-functions-with-underscore": "warn",
+    "chainlink-solidity/prefix-private-functions-with-underscore": "warn",
+    "chainlink-solidity/prefix-storage-variables-with-s-underscore": "warn",
+    "chainlink-solidity/prefix-immutable-variables-with-i": "warn",
+    "chainlink-solidity/all-caps-constant-storage-variables": "warn",
+    "chainlink-solidity/no-hardhat-imports": "warn",
+    "chainlink-solidity/inherited-constructor-args-not-in-contract-definition": "warn",
+    "chainlink-solidity/no-block-single-if-reverts": "warn",
+    "style-guide-casing": [
+      "warn",
+      {
+        "ignoreConstants": true,
+        "ignoreVariables": true
       }
     ]
   }
