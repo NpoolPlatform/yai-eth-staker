@@ -9,22 +9,22 @@ contract Admin {
     error InvalidAddress();
 
     function add() public {
-        if (counterContractAddress == address(0)) revert InvalidAddress();
-        ICounter(counterContractAddress).inc();
+        if (s_counterContractAddress == address(0)) revert InvalidAddress();
+        ICounter(s_counterContractAddress).inc();
     }
 
     function add2() public {
-        if (counterContractAddress == address(0)) revert InvalidAddress();
-        ICounter(counterContractAddress).inc();
-        ICounter(counterContractAddress).inc();
+        if (s_counterContractAddress == address(0)) revert InvalidAddress();
+        ICounter(s_counterContractAddress).inc();
+        ICounter(s_counterContractAddress).inc();
     }
 
     function setCounterAddress(address counterAddress) public {
         if (counterAddress == address(0)) revert InvalidAddress();
-        counterContractAddress = counterAddress;
+        s_counterContractAddress = counterAddress;
     }
 
     function getCounterAddress() public view returns (address) {
-        return counterContractAddress;
+        return s_counterContractAddress;
     }
 }

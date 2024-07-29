@@ -21,13 +21,16 @@ describe(ContractName.ADMIN_CONTRACT_NAME, () => {
 
     await deployments.fixture([ContractName.COUNTER_CONTRACT_NAME])
     const counter = (await ethers.getContract(ContractName.COUNTER_CONTRACT_NAME)) as Contract
+    const counterProxy = (await ethers.getContract(ContractName.COUNTER_PROXY_CONTRACT_NAME)) as Contract
+    counter.attach(await counterProxy.getAddress())
 
     await admin.setCounterAddress(counter.getAddress())
+    await counter.initialize(admin.getAddress())
 
-    await admin.add() // increase count
+    await admin.add()
     expect(await counter.get()).to.equal(1)
 
-    await admin.add() // increase count
+    await admin.add()
     expect(await counter.get()).to.equal(2)
   })
 })

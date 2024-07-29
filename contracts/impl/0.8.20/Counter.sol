@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: SEE LICENSE IN LICENSE
 pragma solidity =0.8.20;
 
-contract Counter {
+import '@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol';
+
+contract Counter is Initializable {
     uint256 public count;
     address private s_adminContractAddress;
 
@@ -9,15 +11,15 @@ contract Counter {
     error InvalidAddress();
 
     modifier onlyAdminContract() {
-        if (msg.sender != adminContractAddress) revert PermissionDenied();
+        if (msg.sender != s_adminContractAddress) revert PermissionDenied();
         _;
     }
 
     event CounterIncreased(address indexed account, uint256 count);
 
-    constructor(address adminAddress) {
+    function initialize(address adminAddress) public initializer {
         if (adminAddress == address(0)) revert InvalidAddress();
-        adminContractAddress = adminAddress;
+        s_adminContractAddress = adminAddress;
     }
 
     // Only admin contract can call

@@ -7,9 +7,6 @@ import { ContractName } from '../../def/const/contract_name'
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts } = hre
 
-  // get admin deployment
-  const admin = await deployments.get(ContractName.ADMIN_CONTRACT_NAME)
-
   const { deployer } = await getNamedAccounts()
   const { deploy } = deployments
 
@@ -28,7 +25,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const deployResult = await deploy(ContractName.COUNTER_CONTRACT_NAME, {
     from: deployer,
-    args: [admin.address], // visit admin contract address
     log: true,
     proxy: {
       proxyContract: proxyContractType,
@@ -42,6 +38,10 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     )) as Contract
     // set counter address for admin
     await admin.setCounterAddress(deployResult.address)
+    const counter = (await hre.ethers.getContract(
+      ContractName.COUNTER_CONTRACT_NAME,
+    )) as Contract
+    await counter.initialize(admin.getAddress())
   }
 }
 
