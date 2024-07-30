@@ -8,24 +8,39 @@ describe(ContractName.ADMIN_CONTRACT_NAME, () => {
     await deployments.fixture([ContractName.ADMIN_CONTRACT_NAME])
     const users = await getUnnamedAccounts()
 
-    const admin = (await ethers.getContract(ContractName.ADMIN_CONTRACT_NAME)) as Contract
+    const admin = (await ethers.getContract(
+      ContractName.ADMIN_CONTRACT_NAME,
+    )) as Contract
 
     await admin.setCounterAddress(users[1])
     const address = await admin.getCounterAddress()
 
     expect(address).to.equal(users[1])
   })
+
   it('Add count', async () => {
     await deployments.fixture([ContractName.ADMIN_CONTRACT_NAME])
-    const admin = (await ethers.getContract(ContractName.ADMIN_CONTRACT_NAME)) as Contract
+    const admin = (await ethers.getContract(
+      ContractName.ADMIN_CONTRACT_NAME,
+    )) as Contract
 
     await deployments.fixture([ContractName.COUNTER_CONTRACT_NAME])
-    const counter = (await ethers.getContract(ContractName.COUNTER_CONTRACT_NAME)) as Contract
-    const counterProxy = (await ethers.getContract(ContractName.COUNTER_PROXY_CONTRACT_NAME)) as Contract
-    counter.attach(await counterProxy.getAddress())
+    const counter = (await ethers.getContract(
+      ContractName.COUNTER_CONTRACT_NAME,
+    )) as Contract
+    const counterImpl = (await ethers.getContract(
+      ContractName.COUNTER_IMPLEMENTATION_CONTRACT_NAME,
+    )) as Contract
+
+    const initialized = await counter.initialized()
+    expect(initialized).to.equal(true)
 
     await admin.setCounterAddress(counter.getAddress())
-    await counter.initialize(admin.getAddress())
+    await counter.setAdminAddress(admin.getAddress())
+
+    await expect(
+      counterImpl.setAdminAddress(admin.getAddress()),
+    ).to.revertedWith('UUPSUnauthorizedCallContext')
 
     await admin.add()
     expect(await counter.get()).to.equal(1)

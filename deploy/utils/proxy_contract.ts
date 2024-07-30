@@ -1,1 +1,1 @@
-export const proxyContractType = 'OpenZeppelinTransparentProxy'
+export const proxyContractType = 'UUPS'

@@ -13,7 +13,7 @@
     "watch": "yarn hardhat deploy --watch --network hardhat",
     "export": "yarn hardhat deploy --network hardhat --export ./output/export/hardhat.json",
     "verify": "yarn hardhat --network mainnet etherscan-verify --sleep",
-    "test": "yarn hardhat test",
+    "test": "yarn hardhat clean && yarn hardhat test",
     "slither": "slither --filter-paths node_modules,old --exclude conformance-to-solidity-naming-conventions .",
     "lint": "yarn lint:sol && yarn prettier:check",
     "lint:fix": "yarn lint:sol:fix && yarn prettier:write",
@@ -66,5 +66,8 @@
     "ts-node": "^10.9.2",
     "typechain": "^8.3.0",
     "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.2"
   }
 }
