@@ -5,13 +5,14 @@ import 'hardhat-deploy'
 import 'hardhat-deploy-ethers'
 import '@nomicfoundation/hardhat-verify'
 import { config as dotEnvConfig } from 'dotenv'
+
 dotEnvConfig()
 
 const config: HardhatUserConfig = {
   solidity: {
     compilers: [
       {
-        version: '0.8.9',
+        version: '0.8.20',
         settings: {
           optimizer: {
             enabled: true,
@@ -24,8 +25,8 @@ const config: HardhatUserConfig = {
   namedAccounts: {
     deployer: {
       default: 0,
-      mainnet: '0x8FC831e238F7AF962214a866BE36fC1429774d60',
-      holesky: '0x8FC831e238F7AF962214a866BE36fC1429774d60',
+      mainnet: `${process.env.MAINNET_PUBLIC_KEY}`,
+      holesky: `${process.env.HOLESKY_PUBLIC_KEY}`,
     },
   },
   defaultNetwork: 'hardhat',
@@ -54,7 +55,7 @@ const config: HardhatUserConfig = {
       // tags: ['contract1', 'contract2'] // only deploy contract contains these tag
     },
     holesky: {
-      url: 'https://ethereum-holesky.publicnode.com',
+      url: 'https://rpc.ankr.com/eth_holesky',
       accounts: [process.env.HOLESKY_PRIVATE_KEY!].filter(Boolean),
       saveDeployments: true,
       live: false,
@@ -65,8 +66,8 @@ const config: HardhatUserConfig = {
     tests: './test',
     cache: './output/cache',
     artifacts: './output/artifacts',
-    deploy: './deploy',
-    deployments: './output/deployments',
+    deploy: './deploy/execution',
+    deployments: './deployments',
   },
   typechain: {
     outDir: 'output/typechain-types',

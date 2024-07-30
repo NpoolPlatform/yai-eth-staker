@@ -8,5 +8,12 @@
     "skipLibCheck": true,
     "resolveJsonModule": true
   },
-  "include": ["hardhat.config.ts", "./scripts", "./test", "./deploy", "./utils"]
+  "include": [
+    "hardhat.config.ts",
+    "./scripts",
+    "./test",
+    "./deploy",
+    "./utils",
+    "def/const/contract_name.ts"
+  ]
 }

@@ -669,18 +669,18 @@
   resolved "https://registry.yarnpkg.com/@nomicfoundation/hardhat-ethers/-/hardhat-ethers-3.0.0.tgz#9c41a5cf6bf1b5677462c57ab7c54d9b2d8bbbc7"
   integrity sha512-0A2hs39YUta//O9EcITnFw/iGzUztJ4FB4UIc2mgdZ2nXvDZUmkQO+Vtdt/guJ6gP66EPbwvFW7t1SRReMGrvg==
 
-"@nomicfoundation/hardhat-ignition-ethers@0.15.0":
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/@nomicfoundation/hardhat-ignition-ethers/-/hardhat-ignition-ethers-0.15.0.tgz#d59bffe8930baf845afa083ca55885096862a6fd"
-  integrity sha512-KmMNUc/jptfwdPA9ukQf+Ajon+m2vLBjDL2ze7d/vQdrS+fDxmoVwmbbEk4GOjianZcwgQOWD9dEWaj04QiowA==
+"@nomicfoundation/hardhat-ignition-ethers@^0.15.5":
+  version "0.15.5"
+  resolved "https://registry.yarnpkg.com/@nomicfoundation/hardhat-ignition-ethers/-/hardhat-ignition-ethers-0.15.5.tgz#98f945c110e26a120baf015b0d2322d5025273aa"
+  integrity sha512-W6s1QN9CFxzSVZS6w9Jcj3WLaK32z2FP5MxNU2OKY1Fn9ZzLr+miXbUbWYuRHl6dxrrl6sE8cv33Cybv19pmCg==
 
-"@nomicfoundation/hardhat-ignition@0.15.0":
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/@nomicfoundation/hardhat-ignition/-/hardhat-ignition-0.15.0.tgz#f5c01f311d54b44764c2c99d4766b82f2d9d49ad"
-  integrity sha512-GbAe90O22uM67U/JnffXX+mBMn0HqCKSH+D98Tb5uWqR1N/M00cB3yY8OdqzVai7I6SuIKTc91mPdvtWt8R3MA==
+"@nomicfoundation/hardhat-ignition@0.15.5":
+  version "0.15.5"
+  resolved "https://registry.yarnpkg.com/@nomicfoundation/hardhat-ignition/-/hardhat-ignition-0.15.5.tgz#6da613732a3d9829a40f6ee6c95fb2db012ebdce"
+  integrity sha512-Y5nhFXFqt4owA6Ooag8ZBFDF2RAZElMXViknVIsi3m45pbQimS50ti6FU8HxfRkDnBARa40CIn7UGV0hrelzDw==
   dependencies:
-    "@nomicfoundation/ignition-core" "^0.15.0"
-    "@nomicfoundation/ignition-ui" "^0.15.0"
+    "@nomicfoundation/ignition-core" "^0.15.5"
+    "@nomicfoundation/ignition-ui" "^0.15.5"
     chalk "^4.0.0"
     debug "^4.3.2"
     fs-extra "^10.0.0"
@@ -713,21 +713,7 @@
     table "^6.8.0"
     undici "^5.14.0"
 
-"@nomicfoundation/ignition-core@0.15.0":
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/@nomicfoundation/ignition-core/-/ignition-core-0.15.0.tgz#28ad7da61d4c1e50d6ead09e8c92881b59c176cf"
-  integrity sha512-d/h8jgJHY4xIroHqdaGeTkTqjQeuzmU759AOn1Fg88cuxVhS7JM22ZI0bQWyLNSMsVstHBIo+lSMIsvm9jBF2w==
-  dependencies:
-    "@ethersproject/address" "5.6.1"
-    cbor "^9.0.0"
-    debug "^4.3.2"
-    ethers "^6.7.0"
-    fs-extra "^10.0.0"
-    immer "10.0.2"
-    lodash "4.17.21"
-    ndjson "2.0.0"
-
-"@nomicfoundation/ignition-core@^0.15.0":
+"@nomicfoundation/ignition-core@0.15.5", "@nomicfoundation/ignition-core@^0.15.5":
   version "0.15.5"
   resolved "https://registry.yarnpkg.com/@nomicfoundation/ignition-core/-/ignition-core-0.15.5.tgz#38d19d29ffd425f7cc2810c45d7a51b31c626067"
   integrity sha512-FgvuoIXhakRSP524JzNQ4BviyzBBKpsFaOWubPZ4XACLT4/7vGqlJ/7DIn0D2NL2anQ2qs98/BNBY9WccXUX1Q==
@@ -742,7 +728,7 @@
     lodash "4.17.21"
     ndjson "2.0.0"
 
-"@nomicfoundation/ignition-ui@^0.15.0":
+"@nomicfoundation/ignition-ui@^0.15.5":
   version "0.15.5"
   resolved "https://registry.yarnpkg.com/@nomicfoundation/ignition-ui/-/ignition-ui-0.15.5.tgz#ef9e11ccbffccc2360c02b20f12713756dfc37da"
   integrity sha512-ZcE4rIn10qKahR4OqS8rl8NM2Fbg2QYiBXgMgj74ZI0++LlCcZgB5HyaBbX+lsnKHjTXtjYD3b+2mtg7jFbAMQ==
@@ -828,6 +814,16 @@
     ethereum-ens "^0.8.0"
     ethers "^4.0.0-beta.1"
     source-map-support "^0.5.19"
+
+"@openzeppelin/contracts-upgradeable@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@openzeppelin/contracts-upgradeable/-/contracts-upgradeable-5.0.2.tgz#3e5321a2ecdd0b206064356798c21225b6ec7105"
+  integrity sha512-0MmkHSHiW2NRFiT9/r5Lu4eJq5UJ4/tzlOgYXNAIj/ONkQTVnz22pLxDvp4C4uZ9he7ZFvGn3Driptn1/iU7tQ==
+
+"@openzeppelin/contracts@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-5.0.2.tgz#b1d03075e49290d06570b2fd42154d76c2a5d210"
+  integrity sha512-ytPc6eLGcHHnapAZ9S+5qsdomhjo6QBHTDRRBFfTxXIpsicMhVPouPgmUPebZZZGX7vt9USA+Z+0M0dSVtSUEA==
 
 "@prettier/sync@^0.3.0":
   version "0.3.0"
@@ -3093,10 +3089,23 @@ ethers@^5.0.0, ethers@^5.0.13, ethers@^5.7.0, ethers@^5.7.2, ethers@~5.7.0:
     "@ethersproject/web" "5.7.1"
     "@ethersproject/wordlists" "5.7.0"
 
-ethers@^6.13.1, ethers@^6.7.0:
+ethers@^6.13.1:
   version "6.13.1"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-6.13.1.tgz#2b9f9c7455cde9d38b30fe6589972eb083652961"
   integrity sha512-hdJ2HOxg/xx97Lm9HdCWk949BfYqYWpyw4//78SiwOLgASyfrNszfMUNB2joKjvGUdwhHfaiMMFFwacVVoLR9A==
+  dependencies:
+    "@adraffy/ens-normalize" "1.10.1"
+    "@noble/curves" "1.2.0"
+    "@noble/hashes" "1.3.2"
+    "@types/node" "18.15.13"
+    aes-js "4.0.0-beta.5"
+    tslib "2.4.0"
+    ws "8.17.1"
+
+ethers@^6.7.0:
+  version "6.13.2"
+  resolved "https://registry.yarnpkg.com/ethers/-/ethers-6.13.2.tgz#4b67d4b49e69b59893931a032560999e5e4419fe"
+  integrity sha512-9VkriTTed+/27BGuY1s0hf441kqwHJ1wtN2edksEtiRvXx+soxRX3iSXTfFqq2+YwrOqbDoTHjIhQnjJRlzKmg==
   dependencies:
     "@adraffy/ens-normalize" "1.10.1"
     "@noble/curves" "1.2.0"
@@ -6247,6 +6256,11 @@ solhint-community@^4.0.0:
     text-table "^0.2.0"
   optionalDependencies:
     prettier "^2.8.3"
+
+"solhint-plugin-chainlink-solidity@npm:@chainlink/solhint-plugin-chainlink-solidity":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@chainlink/solhint-plugin-chainlink-solidity/-/solhint-plugin-chainlink-solidity-1.0.1.tgz#bc4c417fe068ed3b13c239e071f550cc130f6bee"
+  integrity sha512-ld0eHzKJZjs/iNKfZtwbR4yP/0YdkBiB+GASYCUz89V+hEn6nCaRoRywgIONRERhHIv5DEDOhcKjo2u2zYHIUA==
 
 solhint-plugin-prettier@^0.1.0:
   version "0.1.0"
