@@ -11,9 +11,13 @@ yarn compile
 yarn slither
 ```
 
-## TODO
+## Todo
 
 - [ ] Deployment scripts
 - [ ] Unit tests framework
 - [ ] Contract debugger
 - [ ] Convert etherscan-verify.js to typescript
+
+## Best Practices
+
+- [Certik Best Practices](https://www.certik.com/zh-CN/resources/blog/FnfYrOCsy3MG9s9gixfbJ-upgradeable-proxy-contract-security-best-practices)
