@@ -14,6 +14,7 @@
     "export": "yarn hardhat deploy --network hardhat --export ./output/export/hardhat.json",
     "verify": "yarn hardhat --network mainnet etherscan-verify --sleep",
     "test": "yarn hardhat clean && yarn hardhat test",
+    "coverage": "yarn hardhat coverage && mv coverage.json ./output",
     "slither": "slither --filter-paths node_modules,old --exclude conformance-to-solidity-naming-conventions .",
     "lint": "yarn lint:sol && yarn prettier:check",
     "lint:fix": "yarn lint:sol:fix && yarn prettier:write",
@@ -62,7 +63,7 @@
     "solhint-community": "^4.0.0",
     "solhint-plugin-chainlink-solidity": "npm:@chainlink/solhint-plugin-chainlink-solidity",
     "solhint-plugin-prettier": "^0.1.0",
-    "solidity-coverage": "0.8.1",
+    "solidity-coverage": "0.8.3",
     "ts-node": "^10.9.2",
     "typechain": "^8.3.0",
     "typescript": "^5.5.3"

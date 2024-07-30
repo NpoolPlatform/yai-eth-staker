@@ -14,6 +14,6 @@
     "./test",
     "./deploy",
     "./utils",
-    "def/const/contract_name.ts"
+    "./def"
   ]
 }
