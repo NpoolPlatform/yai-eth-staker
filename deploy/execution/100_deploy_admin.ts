@@ -6,6 +6,7 @@ import {
   proxyContractType,
 } from '../utils'
 import { ContractName } from '../../def/const/contract_name'
+import { Contract } from 'ethers'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts } = hre
@@ -50,3 +51,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
 export default func
 func.tags = [ContractName.ADMIN_CONTRACT_NAME]
+func.dependencies = [ContractName.MULTISIG_WALLET_CONTRACT_NAME]

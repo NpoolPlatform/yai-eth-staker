@@ -4,6 +4,16 @@ import { ethers, deployments, getUnnamedAccounts } from 'hardhat'
 import { ContractName } from '../../def/const/contract_name'
 
 describe(ContractName.ADMIN_CONTRACT_NAME, () => {
+  it('Initialized', async () => {
+    await deployments.fixture([ContractName.ADMIN_CONTRACT_NAME])
+    const admin = (await ethers.getContract(
+      ContractName.ADMIN_CONTRACT_NAME,
+    )) as Contract
+
+    const initialized = await admin.initialized()
+    expect(initialized).to.equal(true)
+  })
+
   it('Set counter address', async () => {
     await deployments.fixture([ContractName.ADMIN_CONTRACT_NAME])
     const users = await getUnnamedAccounts()
@@ -31,9 +41,6 @@ describe(ContractName.ADMIN_CONTRACT_NAME, () => {
     const counterImpl = (await ethers.getContract(
       ContractName.COUNTER_IMPLEMENTATION_CONTRACT_NAME,
     )) as Contract
-
-    const initialized = await counter.initialized()
-    expect(initialized).to.equal(true)
 
     await admin.setCounterAddress(counter.getAddress())
     await counter.setAdminAddress(admin.getAddress())

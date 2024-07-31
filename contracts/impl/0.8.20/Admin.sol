@@ -32,6 +32,10 @@ contract Admin is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         emit AdminUpgraded(newImplementation);
     }
 
+    function initialized() public view returns (bool) {
+        return _getInitializedVersion() > 0;
+    }
+
     function add() public {
         if (s_counterContractAddress == address(0)) revert InvalidAddress();
         ICounter(s_counterContractAddress).inc();
