@@ -22,14 +22,15 @@ export const contractAddress = (
   contractName: ContractName,
 ) => {
   let contractAddress = undefined
-  const _contractName = contractName.split(/(?=[A-Z])/).join('_').toUpperCase()
+  const _contractName = contractName
+    .split(/(?=[A-Z])/)
+    .join('_')
+    .toUpperCase()
   switch (network.name) {
     case 'mainnet':
-      contractAddress =
-        process.env[`MAINNET_${_contractName}_CONTRACT_ADDRESS`]
+      contractAddress = process.env[`MAINNET_${_contractName}_CONTRACT_ADDRESS`]
     case 'holesky':
-      contractAddress =
-        process.env[`HOLESKY_${_contractName}_CONTRACT_ADDRESS`]
+      contractAddress = process.env[`HOLESKY_${_contractName}_CONTRACT_ADDRESS`]
   }
   return contractAddress && contractAddress.length ? contractAddress : undefined
 }

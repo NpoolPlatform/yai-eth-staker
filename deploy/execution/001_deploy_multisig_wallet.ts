@@ -27,7 +27,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     from: deployer,
     log: true,
     args: [[deployer], 1],
-    proxy: false
+    proxy: false,
   })
 }
 

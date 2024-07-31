@@ -1,7 +1,11 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
 import { Contract } from 'ethers'
-import { proxyContractAddress, contractAddress, proxyContractType } from '../utils'
+import {
+  proxyContractAddress,
+  contractAddress,
+  proxyContractType,
+} from '../utils'
 import { ContractName } from '../../def/const/contract_name'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
@@ -23,12 +27,16 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     }
   }
 
-  let multisigWalletAddress = contractAddress(hre.network, ContractName.MULTISIG_WALLET_CONTRACT_NAME)
+  let multisigWalletAddress = contractAddress(
+    hre.network,
+    ContractName.MULTISIG_WALLET_CONTRACT_NAME,
+  )
   if (!multisigWalletAddress) {
-    const multisigWalletContract = await deployments.get(ContractName.MULTISIG_WALLET_CONTRACT_NAME)
+    const multisigWalletContract = await deployments.get(
+      ContractName.MULTISIG_WALLET_CONTRACT_NAME,
+    )
     multisigWalletAddress = multisigWalletContract.address
   }
-
 
   const deployResult = await deploy(ContractName.COUNTER_CONTRACT_NAME, {
     from: deployer,
