@@ -42,6 +42,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       ContractName.COUNTER_CONTRACT_NAME,
     )) as Contract
     await counter.initialize(admin.getAddress())
+    await counter.setAdminAddress(admin.getAddress())
   }
 }
 
