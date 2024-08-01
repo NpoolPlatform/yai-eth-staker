@@ -55,7 +55,7 @@ contract Counter is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     }
 
     function sub() public onlyAdminContract {
-        count -= 1;
+        count -= 2;
         emit CounterIncreased(msg.sender, count);
     }
 

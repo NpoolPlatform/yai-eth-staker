@@ -16,6 +16,7 @@
     "watch": "yarn hardhat deploy --watch --network hardhat",
     "export": "yarn hardhat deploy --network hardhat --export ./output/export/hardhat.json",
     "verify": "yarn hardhat --network mainnet etherscan-verify --sleep",
+    "verify:holesky": "yarn hardhat --network holesky etherscan-verify --sleep --api-url https://api-holesky.etherscan.io/api",
     "test": "yarn hardhat clean && yarn hardhat test",
     "coverage": "yarn hardhat coverage && mv coverage.json ./output",
     "slither": "slither --filter-paths node_modules,old --exclude conformance-to-solidity-naming-conventions .",
