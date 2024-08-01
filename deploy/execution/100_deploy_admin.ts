@@ -38,7 +38,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     multisigWalletAddress = multisigWalletContract.address
   }
 
-  await deploy(ContractName.ADMIN_CONTRACT_NAME, {
+  const deployResult = await deploy(ContractName.ADMIN_CONTRACT_NAME, {
     from: deployer,
     log: true,
     proxy: {
@@ -46,7 +46,15 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       proxyContract: proxyContractType,
       viaAdminContract: ContractName.PROXY_ADMIN_CONTRACT_NAME,
     },
+    gasPrice: (Number(await hre.web3.eth.getGasPrice()) * 1.4).toFixed(0)
   })
+
+  const admin = (await hre.ethers.getContract(
+    ContractName.ADMIN_CONTRACT_NAME,
+  )) as Contract
+  if (deployResult.newlyDeployed || !admin.initialized()) {
+    await admin.initialize(multisigWalletAddress)
+  }
 }
 
 export default func

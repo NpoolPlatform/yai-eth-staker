@@ -27,10 +27,10 @@ contract Counter is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         _disableInitializers();
     }
 
-    function initialize() public initializer {
+    function initialize(address initialOwner) public initializer {
         __UUPSUpgradeable_init();
-        __Ownable_init(msg.sender);
-        emit CounterInitialized(msg.sender);
+        __Ownable_init(initialOwner);
+        emit CounterInitialized(initialOwner);
     }
 
     function _authorizeUpgrade(

@@ -10,9 +10,10 @@ describe(ContractName.COUNTER_CONTRACT_NAME, () => {
       ContractName.COUNTER_CONTRACT_NAME,
     )) as Contract
 
-    console.log(await counter.getAddress(), 222)
     const initialized = await counter.initialized()
     expect(initialized).to.equal(true)
+
+    await expect(counter.initialize(counter.getAddress())).to.revertedWith('InvalidInitialization')
   })
 
   it('Get admin address', async () => {
