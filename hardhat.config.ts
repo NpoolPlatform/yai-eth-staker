@@ -5,8 +5,9 @@ import 'hardhat-deploy'
 import 'hardhat-deploy-ethers'
 import '@nomicfoundation/hardhat-verify'
 import { config as dotEnvConfig } from 'dotenv'
-import './tasks/interact'
-require('dotenv').config({ path: ['.env.public'] })
+import './tools/invoke'
+
+dotEnvConfig({ path: ['.env.public'] })
 
 dotEnvConfig()
 const config: HardhatUserConfig = {

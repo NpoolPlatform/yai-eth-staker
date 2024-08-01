@@ -15,6 +15,6 @@
     "./deploy",
     "./utils",
     "./def",
-    "./tasks"
+    "tools"
   ]
 }
