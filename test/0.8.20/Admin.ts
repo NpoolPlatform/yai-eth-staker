@@ -12,6 +12,10 @@ describe(ContractName.ADMIN_CONTRACT_NAME, () => {
 
     const initialized = await admin.initialized()
     expect(initialized).to.equal(true)
+
+    await expect(admin.initialize(admin.getAddress())).to.revertedWith(
+      'InvalidInitialization',
+    )
   })
 
   it('Set counter address', async () => {

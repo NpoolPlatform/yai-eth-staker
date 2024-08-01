@@ -46,18 +46,20 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       proxyContract: proxyContractType,
       viaAdminContract: ContractName.PROXY_ADMIN_CONTRACT_NAME,
     },
+    gasPrice: (Number(await hre.web3.eth.getGasPrice()) * 1.4).toFixed(0),
   })
 
-  if (deployResult.newlyDeployed) {
+  const counter = (await hre.ethers.getContract(
+    ContractName.COUNTER_CONTRACT_NAME,
+  )) as Contract
+  if (deployResult.newlyDeployed || !(await counter.initialized())) {
     const admin = (await hre.ethers.getContract(
       ContractName.ADMIN_CONTRACT_NAME,
     )) as Contract
-    // set counter address for admin
+    // Here we cannot invoke onlyOwner function due to the owner is not initialized
     await admin.setCounterAddress(deployResult.address)
-    const counter = (await hre.ethers.getContract(
-      ContractName.COUNTER_CONTRACT_NAME,
-    )) as Contract
     await counter.setAdminAddress(admin.getAddress())
+    await counter.initialize(multisigWalletAddress)
   }
 }
 

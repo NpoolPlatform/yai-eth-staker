@@ -26,3 +26,17 @@ yarn slither
 - [ConsenSys Best Practices](https://github.com/ConsenSys/smart-contract-best-practices/blob/master/README-zh.md)
 - [Solidity Attack Methods](https://github.com/slowmist/Knowledge-Base/blob/master/translations/solidity-security-comprehensive-list-of-known-attack-vectors-and-common-anti-patterns_zh-cn.md)
 - [Chainlink How to Audit Smart Contract](https://blog.chain.link/how-to-audit-smart-contract-zh/)
+
+## Solidity应用的部署方式
+
+- 第一次主网部署后，Proxy地址将被固化到初始代码和部署数据库
+- 如果升级部署过程中发现Proxy地址与固化地址不一致，部署终止
+- ProxyAdmin的owner默认被设置为多签地址，实作上，该地址的其中一个地址在线存储，用于任意管理员发起升级proposation，其余地址应由不同管理员离线持有，通过dashboard签名同意或拒绝升级proposation
+- Dashboard应支持连接钱包签名提交，也应支持管理员离线签名后copy签名结果提交
+
+## Solidity应用的要点
+
+- 单元测试应覆盖全部用例，并全部测试通过
+- 单元测试应100%覆盖合约代码与分支，并全部测试通过
+- 手动回归测试应覆盖全部公开接口
+- 所有合约攻击手段都应该有对应测试用例覆盖
