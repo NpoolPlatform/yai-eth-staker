@@ -59,9 +59,27 @@ task('invoke', 'Invoke deployed contract function')
     console.log('\n\n')
     try {
       const result = await contract[taskArgs.method](...methodArgs)
-      console.log('\u001b[1;32m', taskArgs.name, taskArgs.method, methodArgs, ': ', '\x1b[0m', '\u001b[1;34m', result, '\x1b[0m')
+      console.log(
+        '\u001b[1;32m',
+        taskArgs.name,
+        taskArgs.method,
+        methodArgs,
+        ': ',
+        '\x1b[0m',
+        '\u001b[1;34m',
+        result,
+        '\x1b[0m',
+      )
     } catch (error) {
-      console.log('\u001b[1;31m', taskArgs.name, taskArgs.method, methodArgs, ': ', error, '\x1b[0m')
+      console.log(
+        '\u001b[1;31m',
+        taskArgs.name,
+        taskArgs.method,
+        methodArgs,
+        ': ',
+        error,
+        '\x1b[0m',
+      )
       // @ts-ignore
       const revertData = error?.data?.data
       const decodedError = contract.interface.parseError(revertData)

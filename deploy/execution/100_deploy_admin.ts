@@ -46,7 +46,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       proxyContract: proxyContractType,
       viaAdminContract: ContractName.PROXY_ADMIN_CONTRACT_NAME,
     },
-    gasPrice: (Number(await hre.web3.eth.getGasPrice()) * 1.4).toFixed(0)
+    gasPrice: (Number(await hre.web3.eth.getGasPrice()) * 1.4).toFixed(0),
   })
 
   const admin = (await hre.ethers.getContract(

@@ -17,7 +17,9 @@ export const isProxyContract = (contractName: ContractName) => {
 }
 
 export const isInitializableContract = (contractName: ContractName) => {
-  return isProxyContract(contractName) &&
+  return (
+    isProxyContract(contractName) &&
     contractName !== ContractName.MULTISIG_WALLET_CONTRACT_NAME &&
     contractName !== ContractName.PROXY_ADMIN_CONTRACT_NAME
+  )
 }

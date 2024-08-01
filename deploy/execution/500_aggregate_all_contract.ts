@@ -1,7 +1,11 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction, Deployment } from 'hardhat-deploy/types'
 import { Contract } from 'ethers'
-import { ContractName, isProxyContract, isInitializableContract } from '../../def/const'
+import {
+  ContractName,
+  isProxyContract,
+  isInitializableContract,
+} from '../../def/const'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments } = hre
@@ -40,7 +44,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       Address: value.address,
       Owner: owner,
       shouldInitialized: isInitializableContract(key as ContractName),
-      Initialized: initialized
+      Initialized: initialized,
     } as MyContract)
   }
   console.log(contracts)
