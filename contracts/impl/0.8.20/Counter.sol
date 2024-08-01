@@ -62,4 +62,8 @@ contract Counter is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     function get() public view returns (uint256) {
         return count;
     }
+
+    function getAdminAddress() public view returns (address) {
+        return s_adminContractAddress;
+    }
 }

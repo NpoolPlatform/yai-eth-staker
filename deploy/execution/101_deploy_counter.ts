@@ -65,5 +65,5 @@ export default func
 func.tags = [ContractName.COUNTER_CONTRACT_NAME]
 func.dependencies = [
   ContractName.MULTISIG_WALLET_CONTRACT_NAME,
-  ContractName.ADMIN_CONTRACT_NAME
+  ContractName.ADMIN_CONTRACT_NAME,
 ]
