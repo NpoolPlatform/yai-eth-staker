@@ -20,10 +20,10 @@ contract Admin is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         _disableInitializers();
     }
 
-    function initialize(address initialOwner) public initializer {
+    function initialize() public initializer {
         __UUPSUpgradeable_init();
-        __Ownable_init(initialOwner);
-        emit AdminInitialized(initialOwner);
+        __Ownable_init(msg.sender);
+        emit AdminInitialized(msg.sender);
     }
 
     function _authorizeUpgrade(
