@@ -5,9 +5,10 @@ import 'hardhat-deploy'
 import 'hardhat-deploy-ethers'
 import '@nomicfoundation/hardhat-verify'
 import { config as dotEnvConfig } from 'dotenv'
+import './tasks/interact'
+require('dotenv').config({ path: ['.env.public'] })
 
 dotEnvConfig()
-
 const config: HardhatUserConfig = {
   solidity: {
     compilers: [
