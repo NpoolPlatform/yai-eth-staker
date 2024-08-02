@@ -3,11 +3,21 @@
 [![Test](https://github.com/NpoolPlatform/solidity-template/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/NpoolPlatform/solidity-template/actions/workflows/main.yml)
 
 ## Build
+```
+## Install node 18 and nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+nvm install lts/hydrogen
+
+```
 
 ```
 yarn add -s slither
 yarn install
 yarn compile
+yarn test
 yarn slither
 ```
 
