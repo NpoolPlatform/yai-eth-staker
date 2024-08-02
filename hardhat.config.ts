@@ -61,6 +61,13 @@ const config: HardhatUserConfig = {
       accounts: [process.env.HOLESKY_PRIVATE_KEY!].filter(Boolean),
       saveDeployments: true,
       live: false,
+      verify: {
+        // verifying the source code of smart contract on etherscan if needed
+        etherscan: {
+          apiKey: process.env.ETHERSCAN_API_KEY,
+          apiUrl: 'https://api-holesky.etherscan.io'
+        },
+      },
     },
   },
   paths: {

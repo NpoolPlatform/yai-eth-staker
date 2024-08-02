@@ -16,7 +16,7 @@
     "watch": "yarn hardhat deploy --watch --network hardhat",
     "export": "yarn hardhat deploy --network hardhat --export ./output/export/hardhat.json",
     "verify": "yarn hardhat --network mainnet etherscan-verify --sleep",
-    "verify:holesky": "yarn hardhat --network holesky etherscan-verify --sleep --api-url https://api-holesky.etherscan.io/api",
+    "verify:holesky": "yarn hardhat --network holesky etherscan-verify --sleep",
     "test": "yarn hardhat clean && yarn hardhat test",
     "coverage": "yarn hardhat coverage && mv coverage.json ./output",
     "install:slither": "pip install slither-analyzer",
