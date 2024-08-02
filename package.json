@@ -19,6 +19,7 @@
     "verify:holesky": "yarn hardhat --network holesky etherscan-verify --sleep --api-url https://api-holesky.etherscan.io/api",
     "test": "yarn hardhat clean && yarn hardhat test",
     "coverage": "yarn hardhat coverage && mv coverage.json ./output",
+    "install:slither": "pip install slither-analyzer",
     "slither": "slither --filter-paths node_modules,old --exclude conformance-to-solidity-naming-conventions .",
     "lint": "yarn lint:sol && yarn prettier:check",
     "lint:fix": "yarn lint:sol:fix && yarn prettier:write",
@@ -74,5 +75,11 @@
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.0.2"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "resolutions": {
+    "nan": "2.18.0"
   }
 }
