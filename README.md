@@ -23,14 +23,17 @@ yarn compile
 yarn test
 yarn slither
 yarn coverage
+yarn invoke --name Admin --method owner --args []
 ```
 
 ## Todo
 
-- [ ] Deployment scripts
-- [ ] Unit tests framework
-- [ ] Contract debugger
-- [ ] Convert etherscan-verify.js to typescript
+- [x] Deployment scripts
+- [x] Unit tests framework
+- [x] Contract debugger
+- [x] Verify contract
+- [ ] Upgrade contract with multisig wallet
+- [ ] Get upgrade deployment result
 
 ## Best Practices
 
