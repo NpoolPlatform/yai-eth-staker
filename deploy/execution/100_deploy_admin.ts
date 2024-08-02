@@ -57,6 +57,12 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   )) as Contract
   if (deployResult.newlyDeployed || !admin.initialized()) {
     await admin.initialize(contractOwner)
+
+    const slot = await hre.ethers.provider.getStorage(
+      deployResult.address,
+      '0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc',
+    )
+    console.log('impl: ', hre.ethers.stripZerosLeft(slot))
   }
 }
 
