@@ -5,18 +5,35 @@
 ## Build
 
 ```
-yarn add -s slither
+## Install node 18 and nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+nvm install lts/hydrogen
+```
+
+```
+yarn precommit:fix
+yarn install:slither
 yarn install
 yarn compile
+yarn test
 yarn slither
+yarn coverage
+yarn invoke --name Admin --method owner --args []
 ```
 
 ## Todo
 
-- [ ] Deployment scripts
-- [ ] Unit tests framework
-- [ ] Contract debugger
-- [ ] Convert etherscan-verify.js to typescript
+- [x] Deployment scripts
+- [x] Unit tests framework
+- [x] Contract debugger
+- [x] Verify contract
+- [ ] Upgrade contract with multisig wallet
+- [ ] Get upgrade deployment result
 
 ## Best Practices
 

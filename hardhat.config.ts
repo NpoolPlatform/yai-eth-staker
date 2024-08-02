@@ -7,9 +7,10 @@ import '@nomicfoundation/hardhat-verify'
 import { config as dotEnvConfig } from 'dotenv'
 import './tools/invoke'
 
+// Important to load .env firstly
+dotEnvConfig()
 dotEnvConfig({ path: ['.env.public'] })
 
-dotEnvConfig()
 const config: HardhatUserConfig = {
   solidity: {
     compilers: [
@@ -61,6 +62,13 @@ const config: HardhatUserConfig = {
       accounts: [process.env.HOLESKY_PRIVATE_KEY!].filter(Boolean),
       saveDeployments: true,
       live: false,
+      verify: {
+        // verifying the source code of smart contract on etherscan if needed
+        etherscan: {
+          apiKey: process.env.ETHERSCAN_API_KEY,
+          apiUrl: 'https://api-holesky.etherscan.io',
+        },
+      },
     },
   },
   paths: {

@@ -7,6 +7,7 @@ import {
   proxyContractType,
 } from '../utils'
 import { ContractName } from '../../def/const/contract_name'
+import { setMultisigOwner } from '../../def/env'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts } = hre
@@ -38,11 +39,13 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     multisigWalletAddress = multisigWalletContract.address
   }
 
+  const contractOwner = setMultisigOwner() ? multisigWalletAddress : deployer
+
   const deployResult = await deploy(ContractName.COUNTER_CONTRACT_NAME, {
     from: deployer,
     log: true,
     proxy: {
-      owner: multisigWalletAddress,
+      owner: contractOwner,
       proxyContract: proxyContractType,
       viaAdminContract: ContractName.PROXY_ADMIN_CONTRACT_NAME,
     },
@@ -59,7 +62,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     // Here we cannot invoke onlyOwner function due to the owner is not initialized
     await admin.setCounterAddress(deployResult.address)
     await counter.setAdminAddress(admin.getAddress())
-    await counter.initialize(multisigWalletAddress)
+    await counter.initialize(contractOwner)
   }
 }
 
