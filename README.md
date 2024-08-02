@@ -16,6 +16,7 @@ nvm install lts/hydrogen
 ```
 
 ```
+yarn precommit:fix
 yarn install:slither
 yarn install
 yarn compile
