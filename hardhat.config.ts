@@ -7,9 +7,10 @@ import '@nomicfoundation/hardhat-verify'
 import { config as dotEnvConfig } from 'dotenv'
 import './tools/invoke'
 
+// Important to load .env firstly
+dotEnvConfig()
 dotEnvConfig({ path: ['.env.public'] })
 
-dotEnvConfig()
 const config: HardhatUserConfig = {
   solidity: {
     compilers: [

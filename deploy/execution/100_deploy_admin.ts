@@ -7,6 +7,7 @@ import {
 } from '../utils'
 import { ContractName } from '../../def/const/contract_name'
 import { Contract } from 'ethers'
+import { setMultisigOwner } from '../../def/env'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts } = hre
@@ -38,11 +39,13 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     multisigWalletAddress = multisigWalletContract.address
   }
 
+  const contractOwner = setMultisigOwner() ? multisigWalletAddress : deployer
+
   const deployResult = await deploy(ContractName.ADMIN_CONTRACT_NAME, {
     from: deployer,
     log: true,
     proxy: {
-      owner: multisigWalletAddress,
+      owner: contractOwner,
       proxyContract: proxyContractType,
       viaAdminContract: ContractName.PROXY_ADMIN_CONTRACT_NAME,
     },
@@ -53,7 +56,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     ContractName.ADMIN_CONTRACT_NAME,
   )) as Contract
   if (deployResult.newlyDeployed || !admin.initialized()) {
-    await admin.initialize(multisigWalletAddress)
+    await admin.initialize(contractOwner)
   }
 }
 
