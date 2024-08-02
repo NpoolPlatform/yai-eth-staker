@@ -4,7 +4,7 @@ pragma solidity =0.8.20;
 import { Ownable } from '@openzeppelin/contracts/access/Ownable.sol';
 
 contract MultisigWallet is Ownable {
-    mapping(address signer => bool isSigner) public signers;
+    mapping(address => bool) public signers;
     struct Transaction {
         address destination;
         uint256 value;
@@ -13,9 +13,8 @@ contract MultisigWallet is Ownable {
         bool created;
         uint256 approvals;
     }
-    mapping(uint256 txId => Transaction transaction) public transactions;
-    mapping(uint256 txId => mapping(address signer => bool confirmed))
-        public confirmations;
+    mapping(uint256 => Transaction) public transactions;
+    mapping(uint256 => mapping(address => bool)) public confirmations;
     uint256 public required;
     uint256 public transactionId = 1;
 
