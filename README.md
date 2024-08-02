@@ -16,11 +16,12 @@ nvm install lts/hydrogen
 ```
 
 ```
-yarn add -s slither
+yarn install:slither
 yarn install
 yarn compile
 yarn test
 yarn slither
+yarn coverage
 ```
 
 ## Todo
