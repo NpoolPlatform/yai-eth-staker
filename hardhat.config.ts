@@ -65,7 +65,7 @@ const config: HardhatUserConfig = {
         // verifying the source code of smart contract on etherscan if needed
         etherscan: {
           apiKey: process.env.ETHERSCAN_API_KEY,
-          apiUrl: 'https://api-holesky.etherscan.io'
+          apiUrl: 'https://api-holesky.etherscan.io',
         },
       },
     },

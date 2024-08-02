@@ -3,6 +3,7 @@
 [![Test](https://github.com/NpoolPlatform/solidity-template/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/NpoolPlatform/solidity-template/actions/workflows/main.yml)
 
 ## Build
+
 ```
 ## Install node 18 and nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
