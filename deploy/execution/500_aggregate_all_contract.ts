@@ -21,18 +21,21 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     Owner?: string
     shouldInitialized: boolean
     Initialized: boolean
+    Implementation: string
   }
 
   const contracts = [] as Array<MyContract>
 
   for (let [key, value] of allDeployments) {
     let owner = undefined as unknown as string
+    let implementation = undefined as unknown as string
     let initialized = false
     try {
       const contract = (await hre.ethers.getContract(key)) as Contract
       owner = await contract.owner()
       if (isInitializableContract(key as ContractName)) {
         initialized = await contract.initialized()
+        implementation = await contract.getImplementation()
       }
     } catch (e) {
       if (isProxyContract(key as ContractName)) {
@@ -45,6 +48,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       Owner: owner,
       shouldInitialized: isInitializableContract(key as ContractName),
       Initialized: initialized,
+      Implementation: implementation,
     } as MyContract)
   }
   console.log(contracts)
