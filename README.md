@@ -48,8 +48,6 @@ yarn invoke --name Admin --method owner --args []
 ```
 import { CMInitializableUpgradeable } from '../base/CMInitializableUpgradeable.sol';
 
-import { ICounter } from '../../interface/ICounter.sol';
-
 contract TreasureCenter is CMInitializableUpgradeable {}
 ```
 
