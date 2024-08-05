@@ -4,6 +4,7 @@ import '@nomiclabs/hardhat-truffle5'
 import 'hardhat-deploy'
 import 'hardhat-deploy-ethers'
 import '@nomicfoundation/hardhat-verify'
+import 'hardhat-storage-layout-json'
 import { config as dotEnvConfig } from 'dotenv'
 import './tools/invoke'
 
@@ -78,6 +79,7 @@ const config: HardhatUserConfig = {
     artifacts: './output/artifacts',
     deploy: './deploy/execution',
     deployments: './output/deployments',
+    newStorageLayoutPath: './output/storageLayout',
   },
   typechain: {
     outDir: 'output/typechain-types',

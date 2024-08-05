@@ -27,7 +27,8 @@
     "lint:sol:fix": "solhint \"contracts/**/*.sol\" --ignore-path .solhintignore --fix",
     "prettier:check": "prettier --check \"**/*.{js,json,md,ts,yml}\"",
     "prettier:write": "prettier --write \"**/*.{js,json,md,ts,yml}\"",
-    "precommit:fix": "cp ./hooks/pre-commit ./.git/hooks"
+    "precommit:fix": "cp ./hooks/pre-commit ./.git/hooks",
+    "storage": "yarn hardhat check"
   },
   "pre-commit": [
     "lint",
@@ -59,6 +60,7 @@
     "hardhat-deploy": "^0.12.4",
     "hardhat-deploy-ethers": "^0.4.2",
     "hardhat-gas-reporter": "1.0.8",
+    "hardhat-storage-layout-json": "^0.0.3",
     "mocha": "^10.1.0",
     "pako": "^1.0.6",
     "pre-commit": "^1.2.2",
@@ -77,7 +79,7 @@
     "@openzeppelin/contracts": "^5.0.2"
   },
   "engines": {
-    "node": "18"
+    "node": "18 || 20"
   },
   "resolutions": {
     "nan": "2.18.0"

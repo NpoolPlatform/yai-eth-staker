@@ -2218,6 +2218,13 @@ concat-stream@^1.4.7, concat-stream@^1.6.0, concat-stream@^1.6.2:
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
 
+console-table-printer@^2.9.0:
+  version "2.12.1"
+  resolved "https://registry.yarnpkg.com/console-table-printer/-/console-table-printer-2.12.1.tgz#4a9646537a246a6d8de57075d4fae1e08abae267"
+  integrity sha512-wKGOQRRvdnd89pCeH96e2Fn4wkbenSP6LMHfjfyNLMbGuHEFbMqQNuxXqd0oXG9caIOQ1FTvc5Uijp9/4jujnQ==
+  dependencies:
+    simple-wcswidth "^1.0.1"
+
 constant-case@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/constant-case/-/constant-case-2.0.0.tgz#4175764d389d3fa9c8ecd29186ed6005243b6a46"
@@ -3820,6 +3827,13 @@ hardhat-gas-reporter@1.0.8:
     array-uniq "1.0.3"
     eth-gas-reporter "^0.2.24"
     sha1 "^1.1.1"
+
+hardhat-storage-layout-json@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/hardhat-storage-layout-json/-/hardhat-storage-layout-json-0.0.3.tgz#39566045bbf04e9c9b32faf2bc1a2bbe33719f25"
+  integrity sha512-sJ+TeFcY1BUx3OUGGxIf1Ml9uGtWJm7o4Z4xzMj8kH97kvgSRUpLL9MCk7IH/DHP7JEQm+uUSZMBpvwqlWykbQ==
+  dependencies:
+    console-table-printer "^2.9.0"
 
 hardhat@^2.22.6:
   version "2.22.7"
@@ -6180,6 +6194,11 @@ simple-get@^2.7.0:
     decompress-response "^3.3.0"
     once "^1.3.1"
     simple-concat "^1.0.0"
+
+simple-wcswidth@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/simple-wcswidth/-/simple-wcswidth-1.0.1.tgz#8ab18ac0ae342f9d9b629604e54d2aa1ecb018b2"
+  integrity sha512-xMO/8eNREtaROt7tJvWJqHBDTMFN4eiQ5I4JRMuilwfnFcV5W9u7RUkueNkdw0jPqGMX36iCywelS5yilTuOxg==
 
 sisteransi@^1.0.5:
   version "1.0.5"
