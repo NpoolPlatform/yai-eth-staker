@@ -12,7 +12,8 @@
       }
     ],
     "max-line-length": ["error", 120],
-    "named-parameters-mapping": "warn",
+    "named-parameters-mapping": "off",
+    "no-empty-blocks": "off",
     "no-console": "off",
     "not-rely-on-time": "off",
     "prettier/prettier": [
@@ -47,7 +48,6 @@
         "ignoreConstants": true,
         "ignoreVariables": true
       }
-    ],
-    "named-parameters-mapping": "off"
+    ]
   }
 }

@@ -5,7 +5,7 @@ import { CMInitializableUpgradeable } from '../base/CMInitializableUpgradeable.s
 
 import { ICounter } from '../../interface/ICounter.sol';
 
-contract Admin is CMInitializableUpgradeable {
+contract TreasureCenter is CMInitializableUpgradeable {
     address private s_counterContractAddress;
 
     error InvalidAddress();

@@ -1,17 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity =0.8.20;
 
-import { Initializable } from '@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol';
-import { UUPSUpgradeable } from '@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol';
-import { OwnableUpgradeable } from '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
-import { GetImplementation } from '../base/GetImplementation.sol';
+import { CMInitializableUpgradeable } from '../base/CMInitializableUpgradeable.sol';
 
-contract Counter is
-    Initializable,
-    UUPSUpgradeable,
-    OwnableUpgradeable,
-    GetImplementation
-{
+contract Counter is CMInitializableUpgradeable {
     uint256 public count;
     address private s_adminContractAddress;
 
@@ -24,29 +16,11 @@ contract Counter is
     }
 
     event CounterIncreased(address indexed account, uint256 count);
-    event CounterInitialized(address initialOwner);
     event CounterAdminAddressSet(address adminAddress);
-    event CounterUpgraded(address newImplementation);
 
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
         _disableInitializers();
-    }
-
-    function initialize(address initialOwner) public initializer {
-        __UUPSUpgradeable_init();
-        __Ownable_init(initialOwner);
-        emit CounterInitialized(initialOwner);
-    }
-
-    function _authorizeUpgrade(
-        address newImplementation
-    ) internal override onlyOwner {
-        emit CounterUpgraded(newImplementation);
-    }
-
-    function initialized() public view returns (bool) {
-        return _getInitializedVersion() > 0;
     }
 
     function setAdminAddress(address adminAddress) public onlyProxy {

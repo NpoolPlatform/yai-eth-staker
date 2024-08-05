@@ -43,6 +43,15 @@ yarn invoke --name Admin --method owner --args []
 - [ConsenSys Best Practices](https://github.com/ConsenSys/smart-contract-best-practices/blob/master/README-zh.md)
 - [Solidity Attack Methods](https://github.com/slowmist/Knowledge-Base/blob/master/translations/solidity-security-comprehensive-list-of-known-attack-vectors-and-common-anti-patterns_zh-cn.md)
 - [Chainlink How to Audit Smart Contract](https://blog.chain.link/how-to-audit-smart-contract-zh/)
+- Except multisig wallet contract, all upgradeable contract must be inherited from `CMInitializableUpgradeable`
+
+```
+import { CMInitializableUpgradeable } from '../base/CMInitializableUpgradeable.sol';
+
+import { ICounter } from '../../interface/ICounter.sol';
+
+contract TreasureCenter is CMInitializableUpgradeable {}
+```
 
 ## Solidity应用的部署方式
 
