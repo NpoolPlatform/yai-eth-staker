@@ -2,6 +2,7 @@ node_modules/
 .vscode
 .idea/
 .env
+.env.public
 deployments/
 output/
 coverage/

@@ -1,16 +1,12 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { contractAddress, proxyContractAddress } from './contract_address'
-import { ContractName } from '../../def/const'
+import { ContractName, implementationContractName } from '../../def/const'
 import { setMultisigOwner } from '../../def/env'
 import { proxyContractType } from './proxy_contract'
 import { Contract } from 'ethers'
 import { Deployment } from 'hardhat-deploy/types'
 
-const deployOptions = async (
-  hre: HardhatRuntimeEnvironment,
-  contractName: ContractName,
-  owner: string,
-) => {
+const deployOptions = async (hre: HardhatRuntimeEnvironment, owner: string) => {
   const { getNamedAccounts } = hre
   const { deployer } = await getNamedAccounts()
   return {
@@ -37,10 +33,9 @@ export const freshDeployContract = async (
   const { deployments } = hre
   const { deploy } = deployments
 
-  console.log(`Fresh deploy contract ${contractName} by ${owner}`)
   const deployResult = await deploy(
     contractName,
-    await deployOptions(hre, contractName, owner),
+    await deployOptions(hre, owner),
   )
 
   const contract = (await hre.ethers.getContract(contractName)) as Contract
@@ -64,23 +59,43 @@ export const upgradeContract = async (
   address: string
   implementationAddress: string
 }> => {
-  const { deployments } = hre
-  const { deterministic, getExtendedArtifact } = deployments
+  const { deployments, getNamedAccounts } = hre
+  const { deployer } = await getNamedAccounts()
+  const { deploy } = deployments
 
-  // const multisigContract = (await hre.ethers.getContract(ContractName.MULTISIG_WALLET_CONTRACT_NAME)) as Contract
-  const { address, implementationAddress } = await deterministic(
-    contractName,
-    await deployOptions(hre, contractName, owner),
-  )
-  const extendedArtifact = await getExtendedArtifact(contractName)
-  console.log(`Fresh deploy contract ${contractName} by ${owner}`)
-  console.log(address, implementationAddress, extendedArtifact)
-  // TODO: get upgrade transaction raw bytes
-  // TODO: call propose of multisig contract
+  const multisigContract = (await hre.ethers.getContract(
+    ContractName.MULTISIG_WALLET_CONTRACT_NAME,
+  )) as Contract
+  if ((await multisigContract.getAddress()) !== owner) {
+    throw Error(
+      `${owner} and ${await multisigContract.getAddress()} (${ContractName.MULTISIG_WALLET_CONTRACT_NAME}) mismatched`,
+    )
+  }
+  if (!(await multisigContract.isSigner(deployer))) {
+    throw Error(
+      `${deployer} is not signer of ${await multisigContract.getAddress()}`,
+    )
+  }
+
+  // TODO: check if upgrade transaction exists
+
+  const deployResult = await deploy(implementationContractName(contractName), {
+    contract: contractName,
+    from: deployer,
+  })
+  const contract = (await hre.ethers.getContract(contractName)) as Contract
+  if (deployResult.address !== (await contract.getImplementation())) {
+    const txData = await contract.upgradeToAndCall.populateTransaction(
+      deployResult.address,
+      '0x',
+    )
+    await multisigContract.propose(txData.to, 0, txData.data)
+  }
+
   return Promise.resolve({
     initialized: true,
-    address,
-    implementationAddress: implementationAddress as string,
+    address: deployResult.address,
+    implementationAddress: deployResult.implementation as string,
   })
 }
 
@@ -103,7 +118,9 @@ export const deployContract = async (
     // DO NOTHING
   }
   if (proxyAddress !== proxyContract?.address) {
-    throw Error(`${contractName} proxy address mismatch`)
+    throw Error(
+      `${contractName} proxy address mismatch: ${proxyAddress} != ${proxyContract?.address}`,
+    )
   }
 
   let multisigWalletAddress = contractAddress(
@@ -119,7 +136,7 @@ export const deployContract = async (
 
   const contractOwner = setMultisigOwner() ? multisigWalletAddress : deployer
   return Promise.resolve(
-    proxyAddress
+    proxyAddress && setMultisigOwner()
       ? await upgradeContract(hre, contractName, contractOwner)
       : await freshDeployContract(hre, contractName, contractOwner),
   )

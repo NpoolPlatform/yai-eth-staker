@@ -27,3 +27,9 @@ export const isInitializableContract = (contractName: ContractName) => {
 export const proxyContractName = (contractName: ContractName): ContractName => {
   return (contractName + '_Proxy') as ContractName
 }
+
+export const implementationContractName = (
+  contractName: ContractName,
+): ContractName => {
+  return (contractName + '_Implementation') as ContractName
+}
