@@ -1,63 +1,10 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
-import {
-  contractAddress,
-  proxyContractAddress,
-  proxyContractType,
-} from '../utils'
 import { ContractName } from '../../def/const/contract_name'
-import { Contract } from 'ethers'
-import { setMultisigOwner } from '../../def/env'
+import { deployContract } from '../utils'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts } = hre
-
-  const { deployer } = await getNamedAccounts()
-  const { deploy } = deployments
-
-  const proxyAddress = proxyContractAddress(
-    hre.network,
-    ContractName.ADMIN_CONTRACT_NAME,
-  )
-  if (proxyAddress) {
-    const proxyContract = await deployments.get(
-      ContractName.ADMIN_CONTRACT_NAME,
-    )
-    if (proxyAddress !== proxyContract.address) {
-      return Promise.reject('Admin proxy address mismatch')
-    }
-  }
-
-  let multisigWalletAddress = contractAddress(
-    hre.network,
-    ContractName.MULTISIG_WALLET_CONTRACT_NAME,
-  )
-  if (!multisigWalletAddress) {
-    const multisigWalletContract = await deployments.get(
-      ContractName.MULTISIG_WALLET_CONTRACT_NAME,
-    )
-    multisigWalletAddress = multisigWalletContract.address
-  }
-
-  const contractOwner = setMultisigOwner() ? multisigWalletAddress : deployer
-
-  const deployResult = await deploy(ContractName.ADMIN_CONTRACT_NAME, {
-    from: deployer,
-    log: true,
-    proxy: {
-      owner: contractOwner,
-      proxyContract: proxyContractType,
-      viaAdminContract: ContractName.PROXY_ADMIN_CONTRACT_NAME,
-    },
-    gasPrice: (Number(await hre.web3.eth.getGasPrice()) * 1.4).toFixed(0),
-  })
-
-  const admin = (await hre.ethers.getContract(
-    ContractName.ADMIN_CONTRACT_NAME,
-  )) as Contract
-  if (deployResult.newlyDeployed || !admin.initialized()) {
-    await admin.initialize(contractOwner)
-  }
+  await deployContract(hre, ContractName.ADMIN_CONTRACT_NAME)
 }
 
 export default func

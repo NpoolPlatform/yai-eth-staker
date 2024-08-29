@@ -23,3 +23,7 @@ export const isInitializableContract = (contractName: ContractName) => {
     contractName !== ContractName.PROXY_ADMIN_CONTRACT_NAME
   )
 }
+
+export const proxyContractName = (contractName: ContractName): ContractName => {
+  return (contractName + '_Proxy') as ContractName
+}
