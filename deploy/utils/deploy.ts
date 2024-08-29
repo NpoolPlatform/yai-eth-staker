@@ -33,13 +33,14 @@ export const freshDeployContract = async (
   const { deployments } = hre
   const { deploy } = deployments
 
+  console.log(`Fresh deploy contract ${contractName}`)
   const deployResult = await deploy(
     contractName,
     await deployOptions(hre, owner),
   )
 
   const contract = (await hre.ethers.getContract(contractName)) as Contract
-  const initialized = deployResult.newlyDeployed || !contract.initialized()
+  const initialized = deployResult.newlyDeployed || !await contract.initialized()
   if (initialized) {
     await contract.initialize(owner)
   }
@@ -71,14 +72,10 @@ export const upgradeContract = async (
       `${owner} and ${await multisigContract.getAddress()} (${ContractName.MULTISIG_WALLET_CONTRACT_NAME}) mismatched`,
     )
   }
-  if (!(await multisigContract.isSigner(deployer))) {
-    throw Error(
-      `${deployer} is not signer of ${await multisigContract.getAddress()}`,
-    )
-  }
 
   // TODO: check if upgrade transaction exists
 
+  console.log(`Update deploy contract ${contractName}`)
   const deployResult = await deploy(implementationContractName(contractName), {
     contract: contractName,
     from: deployer,
@@ -135,8 +132,16 @@ export const deployContract = async (
   }
 
   const contractOwner = setMultisigOwner() ? multisigWalletAddress : deployer
+  let initialized = false
+  try {
+    const contract = (await hre.ethers.getContract(contractName)) as Contract
+    initialized = await contract?.initialized()
+  } catch {
+    // DO NOTHING
+  }
+
   return Promise.resolve(
-    proxyAddress && setMultisigOwner()
+    proxyAddress && setMultisigOwner() && initialized
       ? await upgradeContract(hre, contractName, contractOwner)
       : await freshDeployContract(hre, contractName, contractOwner),
   )
