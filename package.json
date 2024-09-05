@@ -30,7 +30,7 @@
     "precommit:fix": "cp ./hooks/pre-commit ./.git/hooks",
     "storage": "yarn hardhat check",
     "deploy:approve": "yarn hardhat --network hardhat approve",
-    "deploy:approve:mainnet": "yarn hardhat --network mainnet mainnet",
+    "deploy:approve:mainnet": "yarn hardhat --network mainnet approve",
     "deploy:approve:holesky": "yarn hardhat --network holesky approve",
     "deploy:approve:localhost": "yarn hardhat --network localhost approve"
   },
