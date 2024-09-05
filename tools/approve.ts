@@ -7,7 +7,7 @@ import {
   proxyContractAddress,
 } from '../deploy/utils'
 import { ContractName } from '../def/const'
-import { collectDeployments } from '../deploy/execution/500_aggregate_all_contract'
+import { collectDeployments } from '../deploy/utils/collect'
 
 interface Task {
   name: string

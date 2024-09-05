@@ -24,6 +24,7 @@ yarn test
 yarn slither
 yarn coverage
 yarn invoke --name Admin --method owner --args []
+yarn approve --name Admin --tx-id 000000000001
 ```
 
 ## Todo
