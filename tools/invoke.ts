@@ -27,16 +27,14 @@ task('invoke', 'Invoke deployed contract function')
   .setAction(async (_taskArgs, hre) => {
     const taskArgs = _taskArgs as Task
 
-    if (hre.network.name != 'localhost' && hre.network.name != 'hardhat') {
+    if (hre.network.name !== 'localhost' && hre.network.name !== 'hardhat') {
       const proxyAddress = proxyContractAddress(
         hre.network,
         taskArgs.name as ContractName,
       )
       const { deployments } = hre
       if (proxyAddress) {
-        const proxyContract = await deployments.get(
-          ContractName.COUNTER_CONTRACT_NAME,
-        )
+        const proxyContract = await deployments.get(taskArgs.name)
         if (proxyAddress !== proxyContract.address) {
           return Promise.reject('Counter proxy address mismatch')
         }

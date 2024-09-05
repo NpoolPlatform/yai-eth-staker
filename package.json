@@ -28,7 +28,8 @@
     "prettier:check": "prettier --check \"**/*.{js,json,md,ts,yml}\"",
     "prettier:write": "prettier --write \"**/*.{js,json,md,ts,yml}\"",
     "precommit:fix": "cp ./hooks/pre-commit ./.git/hooks",
-    "storage": "yarn hardhat check"
+    "storage": "yarn hardhat check",
+    "deploy:approve:holesky": "yarn hardhat --network holesky invoke "
   },
   "pre-commit": [
     "lint",

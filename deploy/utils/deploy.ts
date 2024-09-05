@@ -16,10 +16,11 @@ export interface DeployStat {
   Owner: string
 }
 
-const updateDeployStat = async (
+export const updateDeployStat = async (
   hre: HardhatRuntimeEnvironment,
   stat: DeployStat,
 ) => {
+  if (hre.network.name === 'localhost' || hre.network.name === 'hardhat') return
   const deployStatPath =
     hre.config.paths.deployments + '../../stats/' + hre.network.name
   const deployStatFile = deployStatPath + '/ContractDeployStat.json'

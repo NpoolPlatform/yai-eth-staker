@@ -8,7 +8,9 @@ import {
 } from '../../def/const'
 import { getDeployStat } from '../utils'
 
-const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+export const collectDeployments = async function (
+  hre: HardhatRuntimeEnvironment,
+) {
   const { deployments } = hre
 
   const _allDeployments = await deployments.all()
@@ -56,6 +58,10 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     } as MyContract)
   }
   console.log(contracts)
+}
+
+const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+  collectDeployments(hre)
 }
 
 export default func

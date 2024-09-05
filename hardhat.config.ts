@@ -7,6 +7,7 @@ import '@nomicfoundation/hardhat-verify'
 import 'hardhat-storage-layout-json'
 import { config as dotEnvConfig } from 'dotenv'
 import './tools/invoke'
+import './tools/approve'
 
 // Important to load .env firstly
 dotEnvConfig()

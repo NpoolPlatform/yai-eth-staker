@@ -131,6 +131,11 @@ contract MultisigWallet is Ownable {
         }
     }
 
+    function executed(uint256 txId) public view returns (bool) {
+        Transaction storage transaction = transactions[txId];
+        return transaction.executed;
+    }
+
     function approve(
         uint256 txId
     )
