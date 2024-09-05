@@ -5,6 +5,53 @@ import { setMultisigOwner } from '../../def/env'
 import { proxyContractType } from './proxy_contract'
 import { Contract } from 'ethers'
 import { Deployment } from 'hardhat-deploy/types'
+import { mkdirSync, readFileSync, writeFileSync } from 'fs'
+
+export interface DeployStat {
+  ContractName: ContractName
+  Address: string
+  Implementation: string
+  Upgrade: boolean
+  Approved: boolean
+  Owner: string
+}
+
+const updateDeployStat = async (
+  hre: HardhatRuntimeEnvironment,
+  stat: DeployStat,
+) => {
+  const deployStatPath =
+    hre.config.paths.deployments + '../../stats/' + hre.network.name
+  const deployStatFile = deployStatPath + '/ContractDeployStat.json'
+  mkdirSync(deployStatPath, { recursive: true })
+  let bytes = Buffer.from('{}')
+  try {
+    bytes = await readFileSync(deployStatFile)
+  } catch {
+    // DO NOTHING
+  }
+  const obj = JSON.parse(bytes as unknown as string)
+  obj[stat.ContractName] = stat
+  await writeFileSync(deployStatFile, JSON.stringify(obj, null, 2))
+}
+
+export const getDeployStat = async (
+  hre: HardhatRuntimeEnvironment,
+  contractName: ContractName,
+) => {
+  const deployStatFile =
+    hre.config.paths.deployments +
+    '../../stats/' +
+    hre.network.name +
+    '/ContractDeployStat.json'
+  try {
+    const bytes = await readFileSync(deployStatFile)
+    const obj = JSON.parse(bytes as unknown as string)
+    return obj[contractName]
+  } catch {
+    return undefined
+  }
+}
 
 const deployOptions = async (hre: HardhatRuntimeEnvironment, owner: string) => {
   const { getNamedAccounts } = hre
@@ -40,10 +87,21 @@ export const freshDeployContract = async (
   )
 
   const contract = (await hre.ethers.getContract(contractName)) as Contract
-  const initialized = deployResult.newlyDeployed || !await contract.initialized()
+  const initialized =
+    deployResult.newlyDeployed || !(await contract.initialized())
   if (initialized) {
     await contract.initialize(owner)
   }
+
+  await updateDeployStat(hre, {
+    ContractName: contractName,
+    Address: deployResult.address,
+    Implementation: deployResult.implementation as string,
+    Upgrade: false,
+    Approved: false,
+    Owner: owner,
+  })
+
   return Promise.resolve({
     initialized,
     address: deployResult.address,
@@ -88,6 +146,15 @@ export const upgradeContract = async (
     )
     await multisigContract.propose(txData.to, 0, txData.data)
   }
+
+  await updateDeployStat(hre, {
+    ContractName: contractName,
+    Address: deployResult.address,
+    Implementation: deployResult.implementation as string,
+    Upgrade: true,
+    Approved: false,
+    Owner: owner,
+  })
 
   return Promise.resolve({
     initialized: true,

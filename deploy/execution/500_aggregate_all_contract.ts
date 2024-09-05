@@ -6,6 +6,7 @@ import {
   isProxyContract,
   isInitializableContract,
 } from '../../def/const'
+import { getDeployStat } from '../utils'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments } = hre
@@ -42,13 +43,16 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         console.log(key, e)
       }
     }
+    const stat = await getDeployStat(hre, key as ContractName)
     contracts.push({
       ContractName: key,
-      Address: value.address,
-      Owner: owner,
+      Address: stat?.Address || value.address,
+      Owner: stat?.Owner || owner,
       shouldInitialized: isInitializableContract(key as ContractName),
       Initialized: initialized,
-      Implementation: implementation,
+      Implementation: stat?.Implementation || implementation,
+      Upgrade: stat?.Upgrade || false,
+      Approved: stat?.Approved || false,
     } as MyContract)
   }
   console.log(contracts)
