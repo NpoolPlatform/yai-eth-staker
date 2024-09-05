@@ -14,6 +14,7 @@ export interface DeployStat {
   Upgrade: boolean
   Approved: boolean
   Owner: string
+  TransactionId?: string
 }
 
 export const updateDeployStat = async (
@@ -145,17 +146,17 @@ export const upgradeContract = async (
       deployResult.address,
       '0x',
     )
-    await multisigContract.propose(txData.to, 0, txData.data)
+    const txId = await multisigContract.propose(txData.to, 0, txData.data)
+    await updateDeployStat(hre, {
+      ContractName: contractName,
+      Address: deployResult.address,
+      Implementation: deployResult.implementation as string,
+      Upgrade: true,
+      Approved: false,
+      Owner: owner,
+      TransactionId: txId,
+    })
   }
-
-  await updateDeployStat(hre, {
-    ContractName: contractName,
-    Address: deployResult.address,
-    Implementation: deployResult.implementation as string,
-    Upgrade: true,
-    Approved: false,
-    Owner: owner,
-  })
 
   return Promise.resolve({
     initialized: true,

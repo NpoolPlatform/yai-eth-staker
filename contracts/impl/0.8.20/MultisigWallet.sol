@@ -7,7 +7,6 @@ contract MultisigWallet is Ownable {
     mapping(address => bool) public signers;
     struct Transaction {
         address destination;
-        uint256 value;
         bytes data;
         bool executed;
         bool created;
@@ -60,13 +59,11 @@ contract MultisigWallet is Ownable {
 
     function propose(
         address _destination,
-        uint256 _value,
         bytes memory _data
     ) public onlySigner returns (uint256 txId) {
         txId = transactionId;
         transactions[txId] = Transaction({
             destination: _destination,
-            value: _value,
             data: _data,
             executed: false,
             created: true,
@@ -118,7 +115,7 @@ contract MultisigWallet is Ownable {
             if (
                 _externalCall(
                     transaction.destination,
-                    transaction.value,
+                    0,
                     transaction.data.length,
                     transaction.data
                 )
