@@ -7,11 +7,13 @@ import { CMInitializableUpgradeable } from '../base/CMInitializableUpgradeable.s
 import { Config, ConfigOp } from './Config.sol';
 import { MappingStorage } from './MappingStorage.sol';
 import { SlotStorage } from './SlotStorage.sol';
+import { WithdrawalStorage } from './WithdrawalStorage.sol';
 
 contract Main is CMInitializableUpgradeable {
     using MappingStorage for bytes32;
     using SlotStorage for bytes32;
     using ConfigOp for bytes32;
+    using WithdrawalStorage for bytes32;
 
     /**
      * @dev keccak256("main.commission.receipts.96a1d2f2-7cbc-11ef-b5ff-af7f5d30d39a"): commissionReceipts
@@ -56,12 +58,36 @@ contract Main is CMInitializableUpgradeable {
         0xb6175897dca017c9ccf994308329506f5db5b0512e280d615933460ca9b40225;
 
     /**
+     * @dev keccak256("main.withdrawal.queue.96a1d2f2-7cbc-11ef-b5ff-af7f5d30d39a"): user shares
+     *      Must be accessed with MappingStorage
+     */
+    bytes32 public constant MAIN_WITHDRAWAL_REQUEST_QUEUE_MAPPING =
+        0xb1b6f724d9562fbe3d90536503c8c524fb630d99fc4e5c10a99a29a67e9226f3;
+
+    /**
+     * @dev keccak256("main.withdrawal.request.id.96a1d2f2-7cbc-11ef-b5ff-af7f5d30d39a"): user shares
+     *      Must be accessed with MappingStorage
+     */
+    bytes32 public constant MAIN_WITHDRAWAL_REQUEST_ID_SLOT =
+        0xb93b9e453cb86e684f34210434427249b3755c1caadbca99804487ee1a46b7e8;
+
+    /**
+     * @dev keccak256("main.finalized.withdrawal.request.id.96a1d2f2-7cbc-11ef-b5ff-af7f5d30d39a"): user shares
+     *      Must be accessed with MappingStorage
+     */
+    bytes32 public constant MAIN_FINALIZED_WITHDRAWAL_REQUEST_ID_SLOT =
+        0xd2d0278c29e14f6ef5f34c512b3299d0142311c00df54d74473c30e4bced1cde;
+
+    /**
      * @dev errors
      */
     error InvalidSender();
     error InvalidFeeRatio();
     error PermissionDenied();
     error InvalidValue();
+    error InvalidShares(uint256, uint256);
+    error InvalidRequestId(uint256, uint256);
+    error TransferFailed(address, uint256);
 
     /**
      * @dev modifiers
@@ -151,22 +177,28 @@ contract Main is CMInitializableUpgradeable {
     }
 
     function calculateShare(
-        uint256 amount,
+        uint256 eth,
         uint256 totalShares,
         uint256 totalEther
-    ) internal returns (uint256) {
+    ) internal pure returns (uint256) {
         if (totalShares == 0) {
-            return msg.value;
+            return eth;
         }
-        return (amount * totalShares) / totalEther;
+        return (eth * totalShares) / totalEther;
+    }
+
+    function calculateETH(
+        uint256 shares,
+        uint256 totalShares,
+        uint256 totalEther
+    ) internal pure returns (uint256) {
+        return (shares * totalEther) / totalShares;
     }
 
     function submit(
         address _referral
     ) public payable notPaused returns (uint256) {
-        if (msg.value == 0) {
-            revert InvalidValue();
-        }
+        if (msg.value == 0) revert InvalidValue();
 
         uint256 totalShares = MAIN_TOTAL_SHARES_SLOT.getUint256();
         uint256 totalEther = MAIN_BUFFERED_ETHER_SLOT.getUint256();
@@ -180,5 +212,90 @@ contract Main is CMInitializableUpgradeable {
         emit Submitted(msg.sender, msg.value, _referral);
 
         return userShare;
+    }
+
+    function withdraw(uint256 shares) public returns (uint256 requestId) {
+        requestId = MAIN_WITHDRAWAL_REQUEST_ID_SLOT.getUint256();
+        WithdrawalStorage.WithdrawalRequest
+            storage lastRequest = MAIN_WITHDRAWAL_REQUEST_QUEUE_MAPPING
+                .getWithdrawalRequest(requestId);
+
+        uint256 totalShares = MAIN_TOTAL_SHARES_SLOT.getUint256();
+        uint256 totalEther = MAIN_BUFFERED_ETHER_SLOT.getUint256();
+        uint256 userShare = MAIN_USER_SHARES_MAPPING.getAddressUint256(
+            msg.sender
+        );
+
+        if (shares > userShare) revert InvalidShares(shares, userShare);
+
+        // 1: Sub user share
+        MAIN_USER_SHARES_MAPPING.setAddressUint256(
+            msg.sender,
+            userShare - shares
+        );
+
+        // 2: Calculate withdraw ETH amount
+        uint256 eth = calculateETH(shares, totalShares, totalEther);
+
+        // 3. Increase requestId
+        ++requestId;
+
+        // 3: Create withdrawl request
+        WithdrawalStorage.WithdrawalRequest
+            memory newRequest = WithdrawalStorage.WithdrawalRequest(
+                lastRequest.cumulativeETH + eth,
+                lastRequest.cumulativeShares + shares,
+                msg.sender,
+                uint40(block.timestamp),
+                false
+            );
+        MAIN_WITHDRAWAL_REQUEST_QUEUE_MAPPING.enqueueWithdrawalRequest(
+            requestId,
+            newRequest
+        );
+
+        // 4: Return requestId
+        return requestId;
+    }
+
+    function serveWithdrawalRequests(
+        uint256 lastCandidateRequestId
+    ) public mustOperatorOrOwner {
+        uint256 finalizedRequestId = MAIN_FINALIZED_WITHDRAWAL_REQUEST_ID_SLOT
+            .getUint256();
+        uint256 requestId = MAIN_WITHDRAWAL_REQUEST_ID_SLOT.getUint256();
+
+        if (
+            lastCandidateRequestId < finalizedRequestId ||
+            lastCandidateRequestId > requestId
+        ) {
+            revert InvalidRequestId(finalizedRequestId, lastCandidateRequestId);
+        }
+
+        MAIN_FINALIZED_WITHDRAWAL_REQUEST_ID_SLOT.setUint256(
+            lastCandidateRequestId
+        );
+    }
+
+    function claim(uint256 requestId) public {
+        uint256 finalizedRequestId = MAIN_FINALIZED_WITHDRAWAL_REQUEST_ID_SLOT
+            .getUint256();
+        if (requestId > finalizedRequestId)
+            revert InvalidRequestId(requestId, finalizedRequestId);
+
+        WithdrawalStorage.WithdrawalRequest
+            memory request = MAIN_WITHDRAWAL_REQUEST_QUEUE_MAPPING
+                .getWithdrawalRequest(requestId);
+        if (request.owner != msg.sender) revert PermissionDenied();
+        if (request.claimed) revert PermissionDenied();
+        request.claimed = true;
+
+        WithdrawalStorage.WithdrawalRequest
+            memory prevRequest = MAIN_WITHDRAWAL_REQUEST_ID_SLOT
+                .getWithdrawalRequest(requestId - 1);
+        uint256 eth = request.cumulativeETH - prevRequest.cumulativeETH;
+
+        (bool success, ) = msg.sender.call{ value: eth }('');
+        if (!success) revert TransferFailed(msg.sender, eth);
     }
 }
