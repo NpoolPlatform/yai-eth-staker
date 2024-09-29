@@ -79,6 +79,13 @@ contract Main is CMInitializableUpgradeable {
         0xd2d0278c29e14f6ef5f34c512b3299d0142311c00df54d74473c30e4bced1cde;
 
     /**
+     * @dev keccak256("main.user.withdrawal.request.ids.96a1d2f2-7cbc-11ef-b5ff-af7f5d30d39a"): user shares
+     *      Must be accessed with MappingStorage
+     */
+    bytes32 public constant MAIN_USER_WITHDRWAL_REQUEST_IDS_MAPPING =
+        0x915df5860e3740648c7a978a3e5377bdcc725de1270908f6734f1b0993296e80;
+
+    /**
      * @dev errors
      */
     error InvalidSender();
@@ -253,6 +260,10 @@ contract Main is CMInitializableUpgradeable {
             requestId,
             newRequest
         );
+        MAIN_USER_WITHDRWAL_REQUEST_IDS_MAPPING.addAddressEnumerableSetUintSet(
+            msg.sender,
+            requestId
+        );
 
         // 4: Return requestId
         return requestId;
@@ -289,6 +300,9 @@ contract Main is CMInitializableUpgradeable {
         if (request.owner != msg.sender) revert PermissionDenied();
         if (request.claimed) revert PermissionDenied();
         request.claimed = true;
+
+        MAIN_USER_WITHDRWAL_REQUEST_IDS_MAPPING
+            .removeAddressEnumerableSetUintSet(msg.sender, requestId);
 
         WithdrawalStorage.WithdrawalRequest
             memory prevRequest = MAIN_WITHDRAWAL_REQUEST_ID_SLOT
