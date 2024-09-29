@@ -8,8 +8,9 @@ library Config {
         uint32 mintWrapperAsset;
         uint32 totalFeeRatio;
         uint32 maxTotalFeeRatio;
+        uint32 paused;
         bytes8 wrapperAssetTicker;
-        bytes12 reserved;
+        bytes8 reserved;
     }
 }
 

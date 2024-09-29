@@ -7,12 +7,12 @@ import { OwnableUpgradeable } from '@openzeppelin/contracts-upgradeable/access/O
 import { ERC1967Utils } from '@openzeppelin/contracts/proxy/ERC1967/ERC1967Utils.sol';
 
 // All upgradable contract need to inherit this contract
-contract CMInitializableUpgradeable is
+abstract contract CMInitializableUpgradeable is
     Initializable,
     UUPSUpgradeable,
     OwnableUpgradeable
 {
-    function initialize(address initialOwner) public initializer {
+    function initialize(address initialOwner) public virtual initializer {
         __UUPSUpgradeable_init();
         __Ownable_init(initialOwner);
     }
